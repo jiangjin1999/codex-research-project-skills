@@ -77,23 +77,46 @@ The board is a **map, not a log**: update Markdown and `_ai/` first, then sync t
 
 ## Install
 
-If your Codex environment provides a GitHub skill installer, install one skill at a time:
+Codex loads skills from `$CODEX_HOME/skills/` (defaults to `~/.codex/skills/`). Install one skill at a time. If you only manage a single project, install just `iterate-research-project` — it works entirely on its own.
+
+**Option A — Composio skill installer** (if you already use [`awesome-codex-skills`](https://github.com/ComposioHQ/awesome-codex-skills); it ships the installer under `~/.codex/skills/.system/skill-installer/`):
 
 ```bash
-install-skill-from-github.py --repo jiangjin1999/codex-research-project-skills --path skills/manage-research-portfolio --name manage-research-portfolio
-install-skill-from-github.py --repo jiangjin1999/codex-research-project-skills --path skills/iterate-research-project --name iterate-research-project
+python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo jiangjin1999/codex-research-project-skills --path skills/manage-research-portfolio --name manage-research-portfolio
+python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo jiangjin1999/codex-research-project-skills --path skills/iterate-research-project --name iterate-research-project
 ```
 
-Manual fallback:
+**Option B — clone and copy** (always works):
 
 ```bash
-mkdir -p "$HOME/.agents/skills"
 git clone https://github.com/jiangjin1999/codex-research-project-skills.git
-cp -R codex-research-project-skills/skills/manage-research-portfolio "$HOME/.agents/skills/"
-cp -R codex-research-project-skills/skills/iterate-research-project "$HOME/.agents/skills/"
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R codex-research-project-skills/skills/manage-research-portfolio "${CODEX_HOME:-$HOME/.codex}/skills/"
+cp -R codex-research-project-skills/skills/iterate-research-project "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-Restart Codex if newly installed skills do not appear. The current Codex docs describe skills as reusable workflow folders with `SKILL.md`, optional references, scripts, and `agents/openai.yaml`: https://developers.openai.com/codex/skills
+**Option C — symlink** (best if you plan to edit or `git pull` the skills; changes reflect live):
+
+```bash
+git clone https://github.com/jiangjin1999/codex-research-project-skills.git
+ln -s "$PWD/codex-research-project-skills/skills/manage-research-portfolio" "${CODEX_HOME:-$HOME/.codex}/skills/manage-research-portfolio"
+ln -s "$PWD/codex-research-project-skills/skills/iterate-research-project" "${CODEX_HOME:-$HOME/.codex}/skills/iterate-research-project"
+```
+
+## Quick start: how to actually use it
+
+You do **not** search for or manually call a skill. Codex reads each skill's `SKILL.md` `description` and **auto-triggers the matching skill** when your request fits. After installing:
+
+1. Restart Codex so it picks up the new skill metadata (`ls ~/.codex/skills` to confirm the folders are there).
+2. In a session, **just describe your task** — or mention the skill by name to be explicit. Examples:
+   - *"Set up a research portfolio for my LLM-reasoning projects with a dashboard."* → triggers `manage-research-portfolio`.
+   - *"Start a new attempt in this project to test tree-of-thoughts search depth and update the board."* → triggers `iterate-research-project`.
+   - *"Use iterate-research-project to initialize this folder as a single project."* → explicit call.
+3. The skill scaffolds the folders, writes the board, and keeps Markdown / `_ai/` / board in sync as you work.
+
+If a skill doesn't fire, make the intent obvious in your prompt or run `codex doctor`. The current Codex docs describe skills as reusable workflow folders with `SKILL.md`, optional references, scripts, and `agents/openai.yaml`: https://developers.openai.com/codex/skills
 
 ## Example
 
