@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Portfolio Manager"
+  short_description: "Manage a multi-project research portfolio"
+  default_prompt: "Use $manage-research-portfolio to organize this research portfolio."
