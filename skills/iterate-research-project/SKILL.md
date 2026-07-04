@@ -12,6 +12,8 @@ Two rules run through everything:
 1. **Markdown first, board second.** Update the source markdown or `_ai` note first. Only then sync `PROJECT_BOARD.html`.
 2. **The board is a map, not a log.** `PROJECT_BOARD.html` shows current state and points to evidence. It never stores raw logs, private data, or absolute paths.
 
+And one habit that drives iteration: **new idea → new subproject.** Experiment attempts are the core of the work. When there is something to try, create a fresh `0-Project/<date>_<slug>/` and iterate there instead of overwriting or endlessly re-iterating one attempt. Keep subprojects small and single-purpose; don't fear duplication. This keeps history append-only and comparable (see `references/project-iteration-system.md`).
+
 This project usually lives inside a portfolio (`<slug>-project/<project>/`). When status, owner, priority, or public state changes, sync up to the portfolio dashboard using the `manage-research-portfolio` skill.
 
 ## Project Contract

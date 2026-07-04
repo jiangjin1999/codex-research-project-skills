@@ -12,6 +12,8 @@ Two rules run through everything:
 1. **Markdown first, board second.** Update the registry or the narrowest `_ai`/source note first, then sync `PROJECT_DASHBOARD.html`.
 2. **The portfolio stays compact.** Detailed experiments, data dictionaries, and paper notes live inside each project; the overview only holds portfolio-level state and navigation.
 
+And one habit that keeps the portfolio alive: **a project can start from any path.** When a new project appears, scaffold it from `_PROJECT_TEMPLATE`, add it to the registry, and sync its card onto the dashboard — so status flows *up* automatically. These behaviors are driven by the portfolio's guideline files (`PROJECT_GUIDELINES.md`, this skill); extend them by adding rules, and future actions follow. This is what makes multi-owner, multi-project management sustainable.
+
 ## Start Here
 
 1. Identify scope before editing:

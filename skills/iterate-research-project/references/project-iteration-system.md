@@ -64,7 +64,16 @@ Create less if the project is still small, but keep the responsibilities separat
 
 Keep `_ai/project_board_spec.md` as the durable board contract so any collaborator can regenerate the board consistently. Update these when the project changes; do not use them as a dump for full transcripts.
 
-## Subproject Naming
+## Subproject Discipline
+
+`0-Project/` holds **subprojects**: one folder per concrete attempt. Subprojects are the core unit of iteration, so create them freely and keep them small.
+
+- **New idea → new subproject.** When you want to try something, start a fresh `0-Project/<date>_<name>/` instead of overwriting or endlessly re-iterating an existing attempt.
+- **Don't fear duplication.** Parallel subprojects that reuse code, config, or data are fine; they keep results comparable and the history legible.
+- **Keep each subproject small and single-purpose** so it is easy to read, compare, and abandon.
+- **Promote when it earns it.** If a subproject grows its own data, roadmap, and audience, graduate it into a full project in the portfolio.
+
+This keeps iteration append-only: an accumulating, readable trail of what was tried — instead of one mutable blob.
 
 Use a dated slug:
 

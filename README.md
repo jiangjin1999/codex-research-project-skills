@@ -13,6 +13,51 @@ Two Codex skills for organizing research work that grows across many projects an
 
 The skills are instruction-first. They use `references/` for detailed patterns and avoid scripts in v1 because the work is mostly classification, judgment, and synchronization. The portfolio areas are prefixed with the portfolio's own slug (e.g. the LLM-reasoning example uses `reasoning-overview`, `reasoning-project`, `reasoning-data`, `reasoning-ai`).
 
+## How to use these well
+
+These skills encode a *way of working*, not just a folder layout. The rules live in **behavior-guideline Markdown** (`PROJECT_GUIDELINES.md`, `GIT_WORKFLOW.md`, and each `SKILL.md`) that the agent reads and follows — so the system keeps itself in order as you work, and **you can extend it by adding your own guideline files**. Add a rule to a guideline file and every future action honors it.
+
+### 1. Portfolio — create a project anywhere, let the guidelines sync it
+
+- From **any path** in your tree, ask the agent to start a project. Guideline-driven behavior then scaffolds the templated single-project skeleton, registers the project, and updates the portfolio dashboard — you wire nothing by hand.
+- As you make progress, the same guidelines keep status, next action, and the dashboard cards **in sync automatically**; progress flows *up* to the portfolio without a separate step.
+- Because the behavior is just text, it composes: **multiple people in multiple roles across many projects** share one dashboard and one rule set. This is what makes continuous, multi-owner management sustainable.
+
+### 2. Single project — the real work is small subprojects
+
+This is the heart of the system. Most research iteration is five recurring kinds of work:
+
+| Kind of work | Home | Note |
+| --- | --- | --- |
+| **Experiment attempts** — *the core* | `0-Project/<date>_<name>/` | each concrete thing you try = one **subproject** |
+| Data | `2-Data/DATA.md` | source, version, permission, QC, derived-data boundary |
+| Paper survey | `3-Paper_Survey/` | evidence and how it changes your decisions |
+| Skills / local workflows | `4-Skills/` | reusable prompts, commands, procedures |
+| AI records | `_ai/` | working memory: overview, board spec, plan, findings, progress |
+
+Treat **experiment attempts as subprojects**, and be generous about creating them:
+
+- **New idea → new subproject.** Don't overwrite or endlessly re-iterate one attempt. When you want to try something, spin up a fresh `0-Project/<date>_<name>/` and iterate there.
+- **Don't fear duplication.** Parallel subprojects that reuse code or data are fine — they keep results comparable and history legible.
+- **Keep each subproject small and single-purpose**, so it is easy to read, compare, and (when needed) abandon.
+
+The payoff: iteration becomes **append-only**. You accumulate a readable trail of what you tried instead of one mutable blob — which is exactly what makes an AI collaborator (and future-you) effective.
+
+### 3. The board is the AI–human collaboration surface
+
+The HTML board is the best medium for short-horizon human + agent work: one always-current **map** both sides can read and refresh in seconds. Markdown and `_ai/` are the source of truth; the board is the rendered view. Keep it a **map, not a log**. See **The board (看板)** below for the exact views.
+
+### Recommendations (opinionated)
+
+A few habits that make the above pay off:
+
+- **Follow the Sync Scale.** Decide each change's blast radius (L0 no HTML → L1 Markdown/`_ai` → L2 this board → L3 the portfolio dashboard) and update only what that level needs — trustworthy boards, no busywork.
+- **Status must be evidence-backed.** "Working" means a run, number, or paper you can point to in the matching folder — not a feeling.
+- **Give data a boundary before you touch it.** Record source, version, permission, and what may be derived or shared; never let raw sensitive data reach a board or handoff.
+- **Promote a subproject when it earns it.** If an attempt grows its own data, roadmap, and audience, graduate it into a full project in the portfolio and let the dashboard pick it up.
+- **Name for scanning.** `0-Project/2026-07-04_tot-depth-sweep` reads far better in six months than `exp3`.
+- **Extend the rules, don't fight them.** New convention? Add a line to a guideline file; the agent follows it next run.
+
 ## The board (看板)
 
 Both skills treat a lightweight HTML **board** as the shared, current-state map that stays in sync with the folders:
@@ -44,11 +89,20 @@ Restart Codex if newly installed skills do not appear. The current Codex docs de
 
 ## Example
 
-See `examples/llm-reasoning-portfolio/` for a fictional portfolio around LLM reasoning, built to the exact structure the skills describe (slug = `reasoning`). Open the boards in a browser:
+See `examples/llm-reasoning-portfolio/` for a fictional portfolio around LLM reasoning, built to the exact structure the skills describe (slug = `reasoning`).
 
-- `reasoning-overview/PROJECT_DASHBOARD.html` — the portfolio dashboard (three views + persistent overview).
-- `reasoning-project/<project>/PROJECT_BOARD.html` — each project's own five-view board.
-- `reasoning-overview/public-dashboard/` — the sanitized public copy (run `serve.sh` to preview).
+Preview it locally — serve the portfolio root so the dashboard ↔ project links resolve:
+
+```bash
+cd examples/llm-reasoning-portfolio
+python3 -m http.server 8137
+```
+
+Then open:
+
+- `http://localhost:8137/reasoning-overview/PROJECT_DASHBOARD.html` — the portfolio dashboard (three views + persistent overview).
+- `http://localhost:8137/reasoning-project/reasoning-baselines/PROJECT_BOARD.html` — a project's own five-view board.
+- `http://localhost:8137/reasoning-overview/public-dashboard/` — the sanitized public copy (or run its own `serve.sh`).
 
 Layout: `reasoning-overview/` (dashboard, requirements log, template, public copy), `reasoning-project/` (registry + `_PROJECT_TEMPLATE` + three projects), `reasoning-data/` (shared data catalog), `reasoning-ai/` (cross-project handoff). It uses public papers and benchmarks only:
 
