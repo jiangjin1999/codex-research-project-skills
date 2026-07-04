@@ -118,6 +118,68 @@ You do **not** search for or manually call a skill. Codex reads each skill's `SK
 
 If a skill doesn't fire, make the intent obvious in your prompt or run `codex doctor`. The current Codex docs describe skills as reusable workflow folders with `SKILL.md`, optional references, scripts, and `agents/openai.yaml`: https://developers.openai.com/codex/skills
 
+## Copy-paste prompts for your AI
+
+Paste one of these into Codex (or any capable coding agent) to bootstrap the workflow. Fill in the `[[...]]` placeholders. The prompts name the skill so Codex auto-loads it, and inline the key rules so they still work if the skill body hasn't loaded yet.
+
+### A) One project only (standalone `iterate-research-project`)
+
+```text
+Use the iterate-research-project skill on the current folder. This is a single, standalone
+project — there is no portfolio, so skip any portfolio/dashboard/registry steps.
+
+Project: [[one-sentence goal]]
+
+Set it up and keep it honest as it evolves:
+1. Scaffold the structure: README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md, PROJECT_BOARD.html,
+   and folders 1-Docs/ 2-Data/ 3-Paper_Survey/ 4-Skills/ _ai/. Create 0-Project/ on the first attempt.
+2. Classify before writing — put each thing in exactly one place:
+   experiment attempt -> 0-Project/<YYYY-MM-DD>_<name>/ ; method/decision -> 1-Docs/ ;
+   data -> 2-Data/DATA.md ; paper/evidence -> 3-Paper_Survey/ ; reusable prompt/procedure -> 4-Skills/ ;
+   status/next/plan -> _ai/ working memory.
+3. Iterate by SUBPROJECT: every new idea = a new 0-Project/<date>_<name>/ attempt. Don't overwrite or
+   endlessly re-iterate one attempt; keep each small and single-purpose; don't fear duplication.
+4. Markdown first, board second: update the source .md / _ai note, THEN sync PROJECT_BOARD.html
+   (5 views: Progress, Docs, Tasks/attempts, Materials/data, References). The board is a map, not a log —
+   no raw logs, private data, or absolute paths. Back link is optional when standalone.
+5. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
+   logs, caches, or secrets.
+
+Confirm the plan, then create the structure and the board.
+```
+
+### B) Both skills together (portfolio + projects)
+
+```text
+Use the manage-research-portfolio skill here to stand up a research portfolio, then use the
+iterate-research-project skill for each project inside it.
+
+Portfolio slug: [[short-slug, e.g. reasoning]]
+Portfolio theme: [[what these projects share]]
+First projects: [[project-a]], [[project-b]], [[project-c]]
+
+Do this:
+1. Create the four slug-prefixed areas: <slug>-overview/ <slug>-project/ <slug>-data/ <slug>-ai/,
+   plus root PROJECT_GUIDELINES.md and GIT_WORKFLOW.md.
+2. Build the portfolio dashboard <slug>-overview/PROJECT_DASHBOARD.html with a persistent overview
+   (project count, dataset count, abbreviations) and three views: Project Board (one card per project
+   with priority/owner/status/next + link to that project's own board; template card pinned first),
+   Data Board, and Usage Guidelines. Keep a sanitized public-dashboard/ copy for anything published.
+3. In <slug>-project/, add a copyable _PROJECT_TEMPLATE and scaffold each first project from it using
+   iterate-research-project (README, PROJECT_GUIDELINES, PROJECT_BOARD.html, 1-Docs/ 2-Data/
+   3-Paper_Survey/ 4-Skills/ _ai/; 0-Project/ appears on the first attempt).
+4. Keep the whole thing in sync by the Sync Scale: L0 none -> L1 markdown/_ai only -> L2 this project's
+   board -> L3 the portfolio dashboard/registry. A project can be started from any path and then
+   registered + synced up automatically.
+5. Public-safe only: no raw sensitive data, credentials, identity-bearing records, or absolute paths in
+   any .md, HTML, public dashboard, or handoff. Use my own git identity; stage explicit paths.
+
+Confirm the plan, then create the portfolio, the dashboard, and the first project skeletons.
+```
+
+Tip: to add just one more project to an existing portfolio later, say *"Use iterate-research-project to add a new project `[[name]]` under `<slug>-project/`, then sync its card onto the dashboard."*
+
+
 ## Example
 
 See `examples/llm-reasoning-portfolio/` for a fictional portfolio around LLM reasoning, built to the exact structure the skills describe (slug = `reasoning`).
