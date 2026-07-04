@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Map — template-project</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f7fb;
+        --panel: #ffffff;
+        --line: #cfd9ea;
+        --line-strong: #aebbd0;
+        --text: #172033;
+        --muted: #52627a;
+        --accent: #2f6fed;
+        --ok: #147a5f;
+        --warn: #a45d00;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; min-height: 100vh; color: var(--text);
+        background: linear-gradient(180deg, rgba(47, 111, 237, 0.06), transparent 260px), var(--bg);
+      }
+      main { width: min(1120px, calc(100vw - 32px)); margin: 0 auto; padding: 32px 0 40px; }
+      header { display: grid; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+      .topline { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+      h1 { margin: 0; font-size: clamp(24px, 3vw, 34px); line-height: 1.14; }
+      .badge {
+        display: inline-flex; align-items: center; min-height: 32px; padding: 6px 10px;
+        border: 1px solid #bdd0f4; border-radius: 8px; color: #1c58cb; background: #f8fbff;
+        font-size: 14px; font-weight: 700; white-space: nowrap;
+      }
+      .lead { max-width: 860px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.75; }
+      .entry { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 22px 0; }
+      .entry a, .card {
+        display: block; color: inherit; text-decoration: none; background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--line); border-radius: 8px;
+        transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+      }
+      .entry a { padding: 14px; }
+      .entry a:hover, .card:hover { border-color: var(--line-strong); transform: translateY(-1px); box-shadow: 0 12px 30px rgba(33, 45, 72, 0.08); }
+      .entry strong, .card strong { display: block; font-size: 15px; }
+      .entry span, .card span { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+      .section-title { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 26px 0 12px; }
+      h2 { margin: 0; font-size: 18px; line-height: 1.3; }
+      .hint { color: var(--muted); font-size: 13px; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .card { min-height: 98px; padding: 14px 16px; }
+      .card .index { display: inline-flex; align-items: center; min-height: 22px; margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+      .flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+      .step { min-height: 74px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+      .step b { display: block; margin-bottom: 6px; font-size: 13px; }
+      .step small { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
+      footer { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; line-height: 1.6; }
+      @media (max-width: 780px) {
+        main { width: min(100vw - 20px, 720px); padding-top: 20px; }
+        .topline, .section-title { align-items: flex-start; flex-direction: column; }
+        .entry, .grid, .flow { grid-template-columns: 1fr; }
+        .badge { white-space: normal; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="topline">
+          <h1>Single-project iteration map</h1>
+          <span class="badge">in-project loop</span>
+        </div>
+        <p class="lead">
+          <a href="../../overview/roadmap.html">&larr; Back to portfolio board</a> &nbsp;·&nbsp;
+          A project iterates through 6 core folders. README, PROJECT_GUIDELINES, and PROJECT_BOARD.html are the entry and map; concrete content goes into the most matching folder.
+        </p>
+      </header>
+
+      <section class="entry" aria-label="Project entry">
+        <a href="./README.md"><strong>README</strong><span>Goal, folder map, quick start, current status.</span></a>
+        <a href="./PROJECT_GUIDELINES.md"><strong>PROJECT_GUIDELINES</strong><span>Rules, naming, iteration flow, done criteria.</span></a>
+        <a href="./_ai/task_plan.md"><strong>Task plan</strong><span>This round's goal, blockers, next step.</span></a>
+      </section>
+
+      <section aria-labelledby="folders-title">
+        <div class="section-title">
+          <h2 id="folders-title">Core folders</h2>
+          <span class="hint">Record in the most matching folder; do not pile materials at the root.</span>
+        </div>
+        <div class="grid">
+          <a class="card" href="./0-Project/README.md"><span class="index">0-Project</span><strong>Attempts &amp; experiment branches</strong><span>Hypotheses, commands, results, retrospectives, next steps.</span></a>
+          <a class="card" href="./1-Docs/README.md"><span class="index">1-Docs</span><strong>Topic docs &amp; method notes</strong><span>Background, methods, design trade-offs, reusable summaries.</span></a>
+          <a class="card" href="./2-Data/README.md"><span class="index">2-Data</span><strong>Data notes &amp; derivations</strong><span>Data cards, schema, cleaning, derived data, limits.</span></a>
+          <a class="card" href="./3-Paper_Survey/README.md"><span class="index">3-Paper_Survey</span><strong>Paper evidence &amp; sources</strong><span>Paper notes, evidence matrix, method comparisons.</span></a>
+          <a class="card" href="./4-Skills/README.md"><span class="index">4-Skills</span><strong>Project-local AI rules</strong><span>Prompts, preferences, checklists, collaboration rules.</span></a>
+          <a class="card" href="./_ai/project_overview.md"><span class="index">_ai</span><strong>Plan, findings, sync</strong><span>Overview, task plan, findings, progress.</span></a>
+        </div>
+      </section>
+
+      <section aria-labelledby="flow-title">
+        <div class="section-title">
+          <h2 id="flow-title">Recommended iteration loop</h2>
+          <span class="hint">Plan first; evidence and experiments calibrate each other.</span>
+        </div>
+        <div class="flow">
+          <div class="step"><b>1. Plan</b><small>Goal, hypothesis, acceptance criteria.</small></div>
+          <div class="step"><b>2. Evidence</b><small>Papers, methods, citations.</small></div>
+          <div class="step"><b>3. Data</b><small>Inputs, schema, limits.</small></div>
+          <div class="step"><b>4. Experiment</b><small>Run, record metrics and results.</small></div>
+          <div class="step"><b>5. Docs</b><small>Promote methods and retrospectives.</small></div>
+          <div class="step"><b>6. Sync</b><small>Update findings, risks, next step.</small></div>
+        </div>
+      </section>
+
+      <footer>
+        Template board · after copying, fill the README one-liner, then start the first round in <code>_ai/task_plan.md</code>. Page version: 2026-07-04-v1.
+      </footer>
+    </main>
+  </body>
+</html>

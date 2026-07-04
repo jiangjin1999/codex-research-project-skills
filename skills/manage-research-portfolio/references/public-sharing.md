@@ -19,7 +19,7 @@ A useful public skill repository usually includes:
 - `skills/<skill-name>/SKILL.md`;
 - `skills/<skill-name>/agents/openai.yaml`;
 - `skills/<skill-name>/references/*.md`;
-- small example workspaces outside the skill folders.
+- small example workspaces outside the skill folders, including a `PROJECT_BOARD.html` and a portfolio board so people can see the board (看板) the skills describe.
 
 Avoid README-like files inside individual skill folders unless the skill standard requires them. Keep skill folders focused on agent-useful instructions.
 

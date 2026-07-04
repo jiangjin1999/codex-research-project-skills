@@ -1,4 +1,4 @@
 interface:
   display_name: "Iterative Research Project"
-  short_description: "Iterate one research project with evidence"
-  default_prompt: "Use $iterate-research-project to plan the next project iteration."
+  short_description: "Iterate one research project and keep its PROJECT_BOARD.html in sync"
+  default_prompt: "Use $iterate-research-project to plan the next iteration and sync the project board."

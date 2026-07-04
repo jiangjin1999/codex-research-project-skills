@@ -8,10 +8,19 @@ Two Codex skills for organizing research work that grows across many projects an
 
 | Skill | Use it for | Core folders |
 | --- | --- | --- |
-| `manage-research-portfolio` | A portfolio of many research projects, shared status, data boundaries, and cross-project handoffs. | `portfolio-overview`, `portfolio-data`, `portfolio-projects`, `portfolio-ai` |
-| `iterate-research-project` | One research project that evolves through subprojects, docs, data notes, literature, local workflows, and AI working memory. | `0-Subprojects`, `1-Docs`, `2-Data`, `3-Literature`, `4-Skills`, `_ai` |
+| `manage-research-portfolio` | A portfolio of many research projects, shared status, data boundaries, cross-project handoffs, and a portfolio board (看板). | `overview`, `projects`, `data`, `_ai` |
+| `iterate-research-project` | One research project that evolves through attempts, docs, data notes, papers, local workflows, AI working memory, and a project board (看板). | `0-Project`, `1-Docs`, `2-Data`, `3-Paper_Survey`, `4-Skills`, `_ai` |
 
 The skills are instruction-first. They use `references/` for detailed patterns and avoid scripts in v1 because the work is mostly classification, judgment, and synchronization.
+
+## The board (看板)
+
+Both skills treat a lightweight HTML **board** as the shared, current-state map that stays in sync with the folders:
+
+- Portfolio board — `overview/roadmap.html`: a Roadmap plus Projects / Data / References / Skills views. Each project card links to that project's own board.
+- Project board — `projects/<project>/PROJECT_BOARD.html`: an always-visible top snapshot (status, owner, recent sync, current focus) plus Progress / Docs Map / Attempts / Data / References views.
+
+The board is a **map, not a log**: update Markdown and `_ai/` first, then sync the board. Each board view maps 1:1 to a folder, so a reader can move between the board and the files without surprise. A Sync Scale (L0 read-only → L3 phase/public/ownership change) says when a change must reach the board, the registry, and handoffs.
 
 ## Install
 
@@ -35,7 +44,7 @@ Restart Codex if newly installed skills do not appear. The current Codex docs de
 
 ## Example
 
-See `examples/llm-reasoning-portfolio/` for a fictional portfolio around LLM reasoning. It uses public papers and benchmarks as examples:
+See `examples/llm-reasoning-portfolio/` for a fictional portfolio around LLM reasoning, including working portfolio and project boards you can open in a browser. It uses public papers and benchmarks as examples:
 
 - Chain-of-Thought Prompting: https://arxiv.org/abs/2201.11903
 - Self-Consistency: https://arxiv.org/abs/2203.11171
@@ -43,8 +52,7 @@ See `examples/llm-reasoning-portfolio/` for a fictional portfolio around LLM rea
 - Tree of Thoughts: https://arxiv.org/abs/2305.10601
 - Reflexion: https://arxiv.org/abs/2303.11366
 - Graph of Thoughts: https://arxiv.org/abs/2308.09687
-- Towards Large Reasoning Models: https://arxiv.org/abs/2501.09686
-- Agentic Reasoning for Large Language Models: https://arxiv.org/abs/2601.12538
+- Self-Refine: https://arxiv.org/abs/2303.17651
 
 ## Community Discovery
 

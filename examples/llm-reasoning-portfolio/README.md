@@ -1,26 +1,33 @@
-# LLM Reasoning Portfolio Example
+# LLM Reasoning Portfolio (example)
 
-This fictional example shows how the two skills can organize a research portfolio without relying on any source-domain internal context.
+A fictional, public-safe portfolio that shows the two skills working together. It uses only public LLM-reasoning papers and open benchmarks — no private or domain-internal content.
 
 ```text
 llm-reasoning-portfolio/
-├── portfolio-overview/
-├── portfolio-data/
-├── portfolio-projects/
-│   ├── reasoning-baselines/
-│   ├── search-based-reasoning/
-│   └── reflection-agents/
-└── portfolio-ai/
+├── overview/            shared entry, registry, operating rules, portfolio board (roadmap.html)
+├── projects/            project index + template-project + one folder per project
+│   ├── 1-reasoning-baselines/     (mature project: five-view PROJECT_BOARD.html)
+│   ├── 2-search-based-reasoning/  (lighter project: template board)
+│   ├── 3-reflection-agents/       (lighter project: template board)
+│   └── template-project/        (copy this to start a new project)
+├── data/                shared benchmark/data catalog and boundaries
+└── _ai/                 cross-project AI handoffs
 ```
 
-Use `$manage-research-portfolio` for the portfolio-level registry and handoff files. Use `$iterate-research-project` inside each project folder.
+## How the two skills map here
 
-## Fictional Portfolio Goal
+- Use `$manage-research-portfolio` at this root for the registry, `overview/roadmap.html` (the portfolio 看板), shared data notes, and handoffs.
+- Use `$iterate-research-project` inside any `projects/<project>/` for attempts, docs, data, literature, `_ai` working memory, and that project's `PROJECT_BOARD.html`.
 
-Compare reusable workflows for LLM reasoning research:
+## The board (看板) in this example
 
-- prompt-and-sampling baselines;
-- search-based reasoning;
-- reflection and agent feedback loops.
+Two board levels, each coordinated with the folders:
 
-All example papers are public LLM reasoning papers. Any benchmark rows or evaluation records should be open, synthetic, or summarized.
+- Portfolio board: `overview/roadmap.html` — Roadmap + Projects/Data/References/Skills views. Each project card links to that project's own board.
+- Project board: `projects/<project>/PROJECT_BOARD.html` — top snapshot + Progress/Docs Map/Attempts/Data/References views.
+
+Open the HTML files in a browser. They are self-contained (inline CSS/JS), public-safe, and switch views without a server.
+
+## Example papers (public)
+
+Chain-of-Thought (https://arxiv.org/abs/2201.11903), Self-Consistency (https://arxiv.org/abs/2203.11171), ReAct (https://arxiv.org/abs/2210.03629), Tree of Thoughts (https://arxiv.org/abs/2305.10601), Reflexion (https://arxiv.org/abs/2303.11366), Graph of Thoughts (https://arxiv.org/abs/2308.09687).
