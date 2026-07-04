@@ -1,84 +1,77 @@
-# Portfolio System
+# Portfolio Folder And Record System
 
-Use this reference when creating or reorganizing a research portfolio.
+Read this when creating or reorganizing portfolio folders, deciding where a record belongs, defining the registry, setting up the copyable project template, or writing cross-project handoffs.
 
-## Folder Roles
+## Core Ideas
 
-| Folder | Role | Typical files |
+- Separate overview, data, projects, and AI context into four prefixed top-level areas.
+- Keep raw/authoritative data separate from project discussion and from project-derived data.
+- Give every durable artifact one narrow home.
+- Prefer lightweight Markdown first; add JSON, HTML, scripts, or external tools only when the team needs them.
+- Record failed paths and branch decisions, not only success.
+
+## Top-Level Areas
+
+Prefix every area with a short portfolio slug `<slug>` (the demo uses `reasoning`).
+
+| Path | Role | Typical content |
 | --- | --- | --- |
-| `overview/` | Shared entry and current state | `README.md`, project registry, operating rules, portfolio board/roadmap |
-| `projects/` | Concrete research projects | `README.md` index, `template-project/`, one folder per project |
-| `data/` | Shared data and benchmark inventory | data catalog, source manifests, access and export notes |
-| `_ai/` | Durable cross-project AI context | dated handoffs, cross-project decisions, prompt notes |
+| `<slug>-overview` | Team operating entry | overview README, `PROJECT_DASHBOARD.html`, dashboard requirements, project template index, global skills, `public-dashboard/` |
+| `<slug>-project` | Concrete research projects | one folder per project or workflow, plus a copyable `_PROJECT_TEMPLATE` |
+| `<slug>-data` | Data governance area | raw/authoritative dataset descriptions, manifests, dictionaries, access boundaries, governance notes |
+| `<slug>-ai` | Cross-project AI context | handoffs, global prompt notes, context that should survive one conversation, named `<date>_<topic>.md` |
 
-The overview is a map, not the full archive. Keep detailed project execution inside each project.
+Two root files sit above the areas: `PROJECT_GUIDELINES.md` (global operating rules) and `GIT_WORKFLOW.md` (git identity + commit policy). These are files, not folders, and are not counted as folder cards on the dashboard.
 
-## projects/ Rules
+## Project Registry
 
-- `projects/` holds only the project index (`projects/README.md`) and project subfolders.
-- Do not put experiments, papers, or data notes directly in `projects/`.
-- Create a new project by copying `projects/template-project/` — the single-project structure (`0-Project`, `1-Docs`, `2-Data`, `3-Paper_Survey`, `4-Skills`, `_ai`, plus `README.md`, `PROJECT_GUIDELINES.md`, `PROJECT_BOARD.html`). This keeps every project on the same folder logic and board.
-- After copying, first edit the new project's `README.md` one-liner, its `_ai/task_plan.md` goal, and its `PROJECT_BOARD.html` title.
+Keep a portfolio registry in `<slug>-overview/` and mirror a short index in `<slug>-project/README.md`. Use a compact table:
 
-## New Project Intake
+| Field | Meaning |
+| --- | --- |
+| Project | directory or short name |
+| Goal | the question or deliverable it owns |
+| Priority | `TBD`, `low`, `medium`, `high` |
+| Owner | accountable person or `TBD` |
+| Status | `proposed`, `planning`, `preparing`, `active`, `blocked`, `paused`, `done`, `archived` |
+| Next action | one concrete next step |
+| Blocker | data, method, compute, review, decision, or `none` |
+| Evidence | key file, report, run log, review, paper note, or user confirmation |
+| Last sync | date of latest meaningful update |
 
-Before creating or registering a project, capture:
+Status must have evidence. Never mark work `done` from memory alone.
 
-- project name and short slug;
-- research question or deliverable;
-- owner or temporary contact;
-- priority;
-- expected output;
-- data or benchmark sources;
-- sensitive-data boundary;
-- public-safe summary boundary;
-- first next action.
+## Three-File Working Memory
 
-If key fields are missing, use `TBD` instead of inventing details.
+For complex portfolio or project work, keep these in the relevant directory:
 
-## Synchronization Levels
+| File | Use |
+| --- | --- |
+| `task_plan.md` | goal, phases, status, decisions, blockers, errors |
+| `findings.md` | discoveries, risks, open questions, source observations |
+| `progress.md` | session log, actions, validation, handoff, commit made |
 
-| Level | Trigger | Update |
-| --- | --- | --- |
-| 0 | Read-only exploration | Nothing |
-| 1 | Local project work changed | Project source files and `_ai` notes only |
-| 2 | Project status, blocker, evidence, or next action changed | Project summary + portfolio registry + board Projects view |
-| 3 | Roadmap phase, public view, shared data rule, or cross-project rule changed | Registry, board, and cross-project handoff |
+Update as you go: new discovery → `findings.md`; action/validation/failed attempt → `progress.md`; phase/blocker/next/scope change → `task_plan.md`.
 
-Do not synchronize everything on every edit. Synchronize when collaborators need the state.
+## Copyable Project Template
 
-## Portfolio Register Template
+`<slug>-project/_PROJECT_TEMPLATE/` is the single canonical skeleton that new projects copy. It carries the full single-project structure (see the `iterate-research-project` skill): root `README.md`, `PROJECT_GUIDELINES.md`, `PROJECT_BOARD.html`, `GIT_WORKFLOW.md`, `scripts/init_project_git.sh`, the folders `0-Project/1-Docs/2-Data/3-Paper_Survey/4-Skills/_ai`, and `_ai/{project_overview,project_board_spec,task_plan,findings,progress}.md`. Keep a `<slug>-project/PROJECT_TEMPLATE.md` as a short local guide to the project area. The template may appear on the dashboard as a pinned template card, but it never carries real research progress.
 
-```markdown
-| Project | Goal | Priority | Owner | Status | Next action | Blocker | Evidence | Last sync |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| reasoning-baselines | Compare baseline prompting strategies | high | TBD | active | Freeze benchmark set | none | 3-Paper_Survey/README.md | 2026-07-04 |
-```
+## New Project Initialization
 
-## Evidence Rules
+When a new project is created, complete all of these together:
 
-- Status requires evidence.
-- Evidence can be a paper note, benchmark result, project overview, run log, review, decision note, or user confirmation.
-- If evidence is weak, label the status as draft, proposed, or needs review.
-- Keep "next action" singular and concrete.
+1. Confirm operator Git identity; record it in the new project `_ai/progress.md` or a `<slug>-ai` handoff.
+2. Copy `_PROJECT_TEMPLATE` to `<slug>-project/<project-name>/`.
+3. Minimally adapt every template file to the new project; use `TBD` for missing facts.
+4. Copy the project map to the public-safe path `<slug>-overview/public-dashboard/projects/<project-slug>/index.html`.
+5. Add the project card to the dashboard, its server-state defaults, and the allowed public page path; set the card link to `/projects/<project-slug>/`.
+6. Stage explicit paths and commit; never `git add -A`, never commit raw/derived data, logs, pid, cache, or secrets.
 
-## Cross-Project Handoff Template
+## Data Safety Records
 
-```markdown
-# YYYY-MM-DD Topic Handoff
+For any project or dataset, record: source and location; public/private sensitivity; whether data can be copied, exported, or published; version/date; key fields or dictionary location; QC or known quality issues; de-identification requirements; and where scripts and outputs may live. Keep project-derived data (processed features, trajectories, analysis-ready tables, QC intermediates, project dictionaries) under the project's own `2-Data/`; keep the global `<slug>-data` area for raw/authoritative datasets, inventory, access boundaries, and governance. Never store row-level private examples in overview, skill, or handoff files.
 
-## Current state
-- ...
+## Cross-Project Handoff
 
-## Changed sources
-- ...
-
-## Decisions needed
-- ...
-
-## Stale assumptions to re-check
-- ...
-
-## Next action
-- ...
-```
+Use `<slug>-ai/<date>_<topic>.md` for context that should survive a thread: current portfolio state in a few bullets, changed sources of truth, open decisions and who should decide, stale assumptions to re-check, and the next recommended action. Keep command logs in project-local `progress.md`, not in handoffs.

@@ -1,0 +1,39 @@
+# Project-level Git safety rules
+
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.token
+*.secret
+
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.venv/
+.venv_*/
+venv/
+env/
+node_modules/
+
+*.log
+*.pid
+*.tmp
+*.bak
+*.orig
+
+# Track only the project data boundary document by default.
+2-Data/**
+!2-Data/
+!2-Data/DATA.md
+
+# Attempt-generated data and runtime products are not committed by default.
+0-Project/*/inputs/
+0-Project/*/outputs/
+0-Project/*/inventory/
+0-Project/*/assets/

@@ -4,7 +4,7 @@ Use this reference when handling datasets, benchmarks, paper surveys, evidence s
 
 ## Data Notes
 
-Record data and benchmark context as a data card under `2-Data/` (for example `2-Data/README.md` plus one card per source):
+Record data and benchmark context in `2-Data/DATA.md` (one block per source, plus optional per-source cards):
 
 | Field | Meaning |
 | --- | --- |

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="slate">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>reasoning · Portfolio Dashboard</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#111c33; --card:#16223c; --card-2:#1b2942;
+    --ink:#e6edf7; --muted:#93a4c0; --line:#26344f; --accent:#5b9dff; --accent-2:#7c5cff;
+    --ok:#37c98a; --warn:#f0b64b; --hi:#ff6b6b;
+  }
+  html[data-theme="graphite"]{ --bg:#14151a; --panel:#1b1d24; --card:#22242e; --card-2:#2a2d39; --ink:#eceef3; --muted:#a2a8b8; --line:#333644; --accent:#8ab4ff; --accent-2:#b39cff; }
+  html[data-theme="forest"]{ --bg:#0e1a15; --panel:#12241d; --card:#152c22; --card-2:#1b382b; --ink:#e7f3ec; --muted:#93b7a6; --line:#244436; --accent:#4fd1a1; --accent-2:#79d0ff; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);}
+  .layout{display:flex;min-height:100vh;}
+  /* ---------- sidebar (control console) ---------- */
+  .sidebar{width:232px;flex:0 0 232px;background:var(--panel);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:8px;position:sticky;top:0;height:100vh;}
+  .brand{font-size:15px;font-weight:700;letter-spacing:.3px;margin-bottom:2px;}
+  .brand small{display:block;color:var(--muted);font-weight:500;font-size:11px;margin-top:4px;letter-spacing:.4px;text-transform:uppercase;}
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:14px;}
+  .nav button{all:unset;cursor:pointer;padding:10px 12px;border-radius:9px;color:var(--muted);font-size:13.5px;display:flex;align-items:center;gap:9px;border:1px solid transparent;}
+  .nav button .dot{width:7px;height:7px;border-radius:50%;background:var(--line);}
+  .nav button:hover{background:var(--card);color:var(--ink);}
+  .nav button.active{background:var(--card-2);color:var(--ink);border-color:var(--line);}
+  .nav button.active .dot{background:var(--accent);}
+  .side-foot{margin-top:auto;color:var(--muted);font-size:11px;line-height:1.6;border-top:1px solid var(--line);padding-top:12px;}
+  .side-foot code{color:var(--ink);}
+  /* ---------- main ---------- */
+  .main{flex:1;min-width:0;padding:22px 30px 90px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;}
+  .topbar h1{font-size:18px;margin:0;font-weight:650;}
+  .topbar .right{display:flex;align-items:center;gap:10px;}
+  .ver{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px;}
+  select.theme{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:12px;}
+  /* ---------- persistent overview ---------- */
+  .overview{background:linear-gradient(135deg,var(--card) 0,var(--card-2) 100%);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:20px;}
+  .overview .stats{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:10px;}
+  .stat .n{font-size:26px;font-weight:750;}
+  .stat .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .abbr{display:flex;gap:8px;flex-wrap:wrap;}
+  .abbr span{font-size:11.5px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px 9px;}
+  .abbr b{color:var(--ink);font-weight:600;}
+  /* ---------- views ---------- */
+  .view{display:none;}
+  .view.active{display:block;}
+  .view h2{font-size:14px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:0 0 12px;font-weight:650;}
+  /* filters */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+  .filters label{font-size:11.5px;color:var(--muted);margin-right:-4px;}
+  .filters select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;}
+  .filters .reset{all:unset;cursor:pointer;color:var(--accent);font-size:12px;padding:6px 4px;}
+  .filters .count{margin-left:auto;color:var(--muted);font-size:11.5px;}
+  /* project cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 16px;display:flex;flex-direction:column;gap:9px;}
+  .pcard.pinned{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;}
+  .pcard .head{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .pcard .name{font-weight:680;font-size:14.5px;}
+  .pcard .pin{font-size:10px;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:2px 7px;}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;}
+  .tag{font-size:11px;border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--muted);}
+  .tag.prio-high{color:#fff;background:rgba(255,107,107,.16);border-color:var(--hi);}
+  .tag.prio-medium{color:#fff;background:rgba(240,182,75,.15);border-color:var(--warn);}
+  .tag.prio-low{color:var(--muted);}
+  .tag.prio-TBD{color:var(--muted);border-style:dashed;}
+  .tag.owner{color:var(--ink);}
+  .pcard .row{font-size:12.5px;color:var(--muted);}
+  .pcard .row b{color:var(--ink);font-weight:600;}
+  .pcard .next{font-size:12.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
+  .pcard .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px;}
+  .pcard .foot a{color:var(--accent);font-size:12px;text-decoration:none;}
+  .pcard .foot a:hover{text-decoration:underline;}
+  .pcard .time{font-size:11px;color:var(--muted);}
+  /* data board */
+  .dgroup{margin-bottom:18px;}
+  .dgroup .glabel{font-size:12.5px;font-weight:650;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .badge{font-size:10.5px;border-radius:999px;padding:2px 9px;border:1px solid var(--line);}
+  .badge.private{color:var(--hi);border-color:var(--hi);}
+  .badge.public{color:var(--ok);border-color:var(--ok);}
+  table.data{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  table.data th,table.data td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);}
+  table.data th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.4px;background:var(--card-2);}
+  table.data tr:last-child td{border-bottom:none;}
+  .cat{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 6px;}
+  /* usage guidelines */
+  .gl-section{margin-bottom:22px;}
+  .gl-section > h3{font-size:13px;margin:0 0 4px;}
+  .gl-section > p{color:var(--muted);font-size:12.5px;margin:0 0 12px;}
+  .folder-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+  .fcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;}
+  .fcard .fname{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--accent);margin-bottom:6px;}
+  .fcard .fdesc{font-size:12px;color:var(--muted);line-height:1.55;}
+  .norms{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .norms .ncard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;}
+  .norms h4{margin:0 0 8px;font-size:12.5px;}
+  .norms ul{margin:0;padding-left:16px;color:var(--muted);font-size:12px;line-height:1.7;}
+  /* feedback launcher */
+  .fab{position:fixed;right:22px;bottom:22px;z-index:40;}
+  .fab button{all:unset;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;padding:11px 16px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.35);}
+  .fbpanel{position:fixed;right:22px;bottom:74px;width:320px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:none;z-index:41;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+  .fbpanel.open{display:block;}
+  .fbpanel h4{margin:0 0 10px;font-size:13px;}
+  .fbpanel label{display:block;font-size:11px;color:var(--muted);margin:8px 0 3px;}
+  .fbpanel input,.fbpanel textarea,.fbpanel select{width:100%;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:12px;}
+  .fbpanel .submit{all:unset;cursor:pointer;display:block;text-align:center;margin-top:12px;background:var(--accent);color:#fff;border-radius:8px;padding:9px;font-size:12.5px;font-weight:600;}
+  .fbpanel .note{font-size:10.5px;color:var(--muted);margin-top:8px;line-height:1.5;}
+  @media(max-width:760px){ .sidebar{display:none;} .norms{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="layout">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">reasoning<small>Portfolio Console</small></div>
+    <nav class="nav">
+      <button class="nav-btn active" data-view-target="projects" onclick="showView('projects',this)"><span class="dot"></span>Project Board</button>
+      <button class="nav-btn" data-view-target="data-board" onclick="showView('data-board',this)"><span class="dot"></span>Data Board</button>
+      <button class="nav-btn" data-view-target="other" onclick="showView('other',this)"><span class="dot"></span>Usage Guidelines</button>
+    </nav>
+    <div class="side-foot">
+      Portfolio areas:<br/>
+      <code>reasoning-overview</code><br/><code>reasoning-project</code><br/>
+      <code>reasoning-data</code><br/><code>reasoning-ai</code>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <div class="topbar">
+      <h1>LLM Reasoning — Research Portfolio</h1>
+      <div class="right">
+        <span class="ver" id="ver">2026-07-04-v1</span>
+        <select class="theme" id="theme" onchange="setTheme(this.value)">
+          <option value="slate">Slate</option>
+          <option value="graphite">Graphite</option>
+          <option value="forest">Forest</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- persistent overview -->
+    <section class="overview">
+      <div class="stats">
+        <div class="stat"><div class="n" id="stat-projects">3</div><div class="l">Projects</div></div>
+        <div class="stat"><div class="n" id="stat-data">4</div><div class="l">Tracked datasets</div></div>
+        <div class="stat"><div class="n">1</div><div class="l">Template</div></div>
+      </div>
+      <div class="abbr">
+        <span><b>CoT</b> Chain-of-Thought</span>
+        <span><b>SC</b> Self-Consistency</span>
+        <span><b>ToT</b> Tree of Thoughts</span>
+        <span><b>GoT</b> Graph of Thoughts</span>
+        <span><b>ReAct</b> Reason+Act</span>
+      </div>
+    </section>
+
+    <!-- ============ VIEW: PROJECT BOARD ============ -->
+    <section class="view active" data-view="projects">
+      <h2>Project Board</h2>
+      <div class="filters">
+        <label>Owner</label>
+        <select id="f-owner" onchange="applyFilters()"><option value="">All</option></select>
+        <label>Priority</label>
+        <select id="f-prio" onchange="applyFilters()">
+          <option value="">All</option><option value="high">high</option>
+          <option value="medium">medium</option><option value="low">low</option><option value="TBD">TBD</option>
+        </select>
+        <button class="reset" onclick="resetFilters()">Reset</button>
+        <span class="count" id="p-count"></span>
+      </div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <!-- ============ VIEW: DATA BOARD ============ -->
+    <section class="view" data-view="data-board">
+      <h2>Data Board</h2>
+      <div class="dgroup">
+        <div class="glabel"><span class="badge private">Private</span> restricted / synthetic</div>
+        <div class="cat">Controlled prompts</div>
+        <table class="data"><thead><tr><th>Dataset</th><th>Role</th><th>Version</th><th>QC</th><th>Boundary</th></tr></thead>
+          <tbody>
+            <tr><td>Synthetic ablation set</td><td>controlled prompt/format tests</td><td>2026-07-04 draft</td><td>draft only</td><td>prompts shareable after review</td></tr>
+          </tbody></table>
+      </div>
+      <div class="dgroup">
+        <div class="glabel"><span class="badge public">Public</span> open benchmarks</div>
+        <div class="cat">Arithmetic reasoning</div>
+        <table class="data"><thead><tr><th>Dataset</th><th>Role</th><th>Version</th><th>QC</th><th>Boundary</th></tr></thead>
+          <tbody><tr><td>GSM8K</td><td>grade-school math word problems</td><td>TBD</td><td>needs split/metric check</td><td>name + aggregate metrics only</td></tr></tbody></table>
+        <div class="cat">Multi-hop reasoning</div>
+        <table class="data"><thead><tr><th>Dataset</th><th>Role</th><th>Version</th><th>QC</th><th>Boundary</th></tr></thead>
+          <tbody>
+            <tr><td>StrategyQA</td><td>implicit multi-step questions</td><td>TBD</td><td>needs license check</td><td>name + aggregate metrics only</td></tr>
+            <tr><td>HotpotQA</td><td>retrieval + reasoning QA</td><td>TBD</td><td>needs split check</td><td>name + aggregate metrics only</td></tr>
+          </tbody></table>
+      </div>
+    </section>
+
+    <!-- ============ VIEW: USAGE GUIDELINES ============ -->
+    <section class="view" data-view="other">
+      <h2>Usage Guidelines</h2>
+
+      <div class="gl-section">
+        <h3>1 · Big-project idea — the four portfolio areas</h3>
+        <p>The whole portfolio is split into four top-level areas. Put each thing in its narrowest home.</p>
+        <div class="folder-cards">
+          <div class="fcard"><div class="fname">reasoning-overview/</div><div class="fdesc">Shared entry: dashboard, requirements log, templates, and the published dashboard copy.</div></div>
+          <div class="fcard"><div class="fname">reasoning-project/</div><div class="fdesc">One folder per project (copied from <code>_PROJECT_TEMPLATE</code>). The registry mirrors the Project Board.</div></div>
+          <div class="fcard"><div class="fname">reasoning-data/</div><div class="fdesc">Global/raw data, inventory, access boundaries, governance. Project-derived data is not written back here.</div></div>
+          <div class="fcard"><div class="fname">reasoning-ai/</div><div class="fdesc">Cross-project AI context: handoffs and global prompts that must survive one conversation.</div></div>
+        </div>
+      </div>
+
+      <div class="gl-section">
+        <h3>2 · Single-project iteration — the six template folders</h3>
+        <p>Every project shares the same skeleton so its map and this dashboard stay consistent.</p>
+        <div class="folder-cards">
+          <div class="fcard"><div class="fname">0-Project/</div><div class="fdesc">Concrete attempts only — each a dated subfolder with its own data/docs/outputs/reports/scripts + TASK_BOARD.md.</div></div>
+          <div class="fcard"><div class="fname">1-Docs/</div><div class="fdesc">Design, methods, comparisons. <code>1-Docs/README.md</code> is the fixed index.</div></div>
+          <div class="fcard"><div class="fname">2-Data/</div><div class="fdesc">Data notes only in <code>2-Data/DATA.md</code>. Derived data stays here, never written back to global data.</div></div>
+          <div class="fcard"><div class="fname">3-Paper_Survey/</div><div class="fdesc">Literature + evidence: claim, evidence, effect on this project's decisions.</div></div>
+          <div class="fcard"><div class="fname">4-Skills/</div><div class="fdesc">Project-local prompts/procedures in <code>4-Skills/PROJECT_SKILLS.md</code>.</div></div>
+          <div class="fcard"><div class="fname">_ai/</div><div class="fdesc">AI memory: project_overview, project_board_spec, task_plan, findings, progress.</div></div>
+        </div>
+      </div>
+
+      <div class="gl-section">
+        <h3>3 · Behavior norms</h3>
+        <div class="norms">
+          <div class="ncard">
+            <h4>Everyday use</h4>
+            <ul>
+              <li>Update Markdown / <code>_ai</code> first, then the board, then this dashboard.</li>
+              <li>Status needs an evidence path before done / paused / blocked.</li>
+              <li>Keep <b>next action</b> singular and concrete.</li>
+              <li>No raw records, secrets, or private excerpts anywhere public.</li>
+            </ul>
+          </div>
+          <div class="ncard">
+            <h4>Initialization</h4>
+            <ul>
+              <li>Confirm Git identity before creating or editing a project.</li>
+              <li>Copy <code>_PROJECT_TEMPLATE</code> → <code>reasoning-project/&lt;name&gt;</code>.</li>
+              <li>Fill <code>_ai/project_overview.md</code>, add a registry row, then sync this dashboard (Level 3).</li>
+              <li>Initialize the project map + public copy under <code>public-dashboard/projects/&lt;slug&gt;/</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- feedback launcher -->
+<div class="fab"><button onclick="toggleFb()">Feedback</button></div>
+<div class="fbpanel" id="fbpanel">
+  <h4>Send feedback</h4>
+  <label>Related project</label>
+  <select id="fb-proj"><option>Portfolio (general)</option><option>reasoning-baselines</option><option>search-based-reasoning</option><option>reflection-agents</option></select>
+  <label>Suggestion</label><textarea rows="2" placeholder="What should change?"></textarea>
+  <label>Reason / evidence</label><input placeholder="Why, and a link if any" />
+  <label>Needs dashboard update?</label><select><option>No</option><option>Yes (Level 3)</option></select>
+  <button class="submit" onclick="fakeSubmit()">Submit</button>
+  <div class="note">Example only — this front-end demo does not store feedback. In the real system this posts to a private, non-web-accessible store.</div>
+</div>
+
+<script>
+  // ---- projects data (template pinned first) ----
+  const PROJECTS = [
+    { slug:"_PROJECT_TEMPLATE", name:"_PROJECT_TEMPLATE", pinned:true, prio:"TBD", owner:"—",
+      status:"template", time:"2026-07-04", next:"Copy to reasoning-project/<name>/ and fill _ai/project_overview.md",
+      page:"../reasoning-project/_PROJECT_TEMPLATE/README.md" },
+    { slug:"reasoning-baselines", name:"reasoning-baselines", prio:"high", owner:"TBD",
+      status:"active (Phase 0)", time:"2026-07-04", next:"Freeze GSM8K split + metric, then run first attempt",
+      page:"../reasoning-project/reasoning-baselines/PROJECT_BOARD.html" },
+    { slug:"search-based-reasoning", name:"search-based-reasoning", prio:"medium", owner:"TBD",
+      status:"planning", time:"2026-07-04", next:"Finish ToT vs GoT evidence note, then define a small search task",
+      page:"../reasoning-project/search-based-reasoning/PROJECT_BOARD.html" },
+    { slug:"reflection-agents", name:"reflection-agents", prio:"medium", owner:"TBD",
+      status:"planning", time:"2026-07-04", next:"Draft the with/without-reflection comparison note",
+      page:"../reasoning-project/reflection-agents/PROJECT_BOARD.html" },
+  ];
+
+  function cardHtml(p){
+    return `<article class="pcard ${p.pinned?'pinned':''}" data-owner="${p.owner}" data-prio="${p.prio}">
+      <div class="head"><span class="name">${p.name}</span>${p.pinned?'<span class="pin">template</span>':''}</div>
+      <div class="tags">
+        <span class="tag prio-${p.prio}">priority: ${p.prio}</span>
+        <span class="tag owner">owner: ${p.owner}</span>
+      </div>
+      <div class="row">status: <b>${p.status}</b></div>
+      <div class="next">next → ${p.next}</div>
+      <div class="foot"><a href="${p.page}">Open project →</a><span class="time">synced ${p.time}</span></div>
+    </article>`;
+  }
+  function renderCards(list){ document.getElementById('cards').innerHTML = list.map(cardHtml).join(''); document.getElementById('p-count').textContent = list.length+" shown"; }
+  function populateOwners(){ const s=document.getElementById('f-owner'); [...new Set(PROJECTS.map(p=>p.owner))].forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;s.appendChild(opt);}); }
+  function applyFilters(){
+    const o=document.getElementById('f-owner').value, pr=document.getElementById('f-prio').value;
+    renderCards(PROJECTS.filter(p=>(!o||p.owner===o)&&(!pr||p.prio===pr)));
+  }
+  function resetFilters(){ document.getElementById('f-owner').value=''; document.getElementById('f-prio').value=''; renderCards(PROJECTS); }
+
+  // ---- views (mutually exclusive) ----
+  function showView(name,btn){
+    document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active', v.dataset.view===name));
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+  }
+  // ---- theme ----
+  function setTheme(t){ document.documentElement.setAttribute('data-theme',t); localStorage.setItem('reasoning-theme',t); }
+  // ---- feedback ----
+  function toggleFb(){ document.getElementById('fbpanel').classList.toggle('open'); }
+  function fakeSubmit(){ toggleFb(); alert('Thanks — recorded locally only in this example.'); }
+
+  (function init(){
+    const t=localStorage.getItem('reasoning-theme'); if(t){ document.getElementById('theme').value=t; setTheme(t); }
+    document.getElementById('stat-projects').textContent = PROJECTS.filter(p=>!p.pinned).length;
+    populateOwners(); renderCards(PROJECTS);
+  })();
+</script>
+</body>
+</html>

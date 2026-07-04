@@ -1,0 +1,10 @@
+{
+  "version": "2026-07-04-v1",
+  "updated": "2026-07-04",
+  "projects": {
+    "reasoning-baselines": { "priority": "high", "owner": "TBD" },
+    "search-based-reasoning": { "priority": "medium", "owner": "TBD" },
+    "reflection-agents": { "priority": "medium", "owner": "TBD" }
+  },
+  "note": "Public-safe board state. In the real system a private server writes this on tag edits; here it is a static sample."
+}

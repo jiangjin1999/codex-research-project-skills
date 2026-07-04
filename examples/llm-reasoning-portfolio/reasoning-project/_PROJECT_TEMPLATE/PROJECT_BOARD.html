@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>_PROJECT_TEMPLATE · Project Board</title>
+<style>
+  :root{ --bg:#f6f8fc; --panel:#ffffff; --ink:#1c2536; --muted:#6b7688; --line:#e2e8f2;
+    --accent:#2f6bff; --accent-2:#7c5cff; --ok:#1f9d63; --warn:#c8891a; --hi:#d84a4a; --chip:#eef2fb; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);}
+  .topbrand{position:sticky;top:0;z-index:30;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 22px;}
+  .topbrand a.back{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;}
+  .topbrand a.back:hover{text-decoration:underline;}
+  .topbrand .right{display:flex;align-items:center;gap:10px;}
+  .ver{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px;}
+  .refresh{all:unset;cursor:pointer;font-size:11.5px;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 10px;}
+  .wrap{max-width:1040px;margin:0 auto;padding:20px 22px 90px;}
+  h1.title{font-size:20px;margin:4px 0 2px;}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:16px;}
+  /* persistent overview */
+  .overview{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:18px;}
+  .overview .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 22px;}
+  .ov b{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:3px;}
+  .ov span{font-size:13px;}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .chip{font-size:11px;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--ink);}
+  .chip.prio-high{color:#fff;background:var(--hi);border-color:var(--hi);}
+  .chip.prio-medium{color:#fff;background:var(--warn);border-color:var(--warn);}
+  .chip.status{background:#eaf1ff;border-color:#cfe0ff;color:var(--accent);}
+  .milestones{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:12.5px;line-height:1.7;}
+  /* nav */
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .nav button{all:unset;cursor:pointer;font-size:13px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--panel);}
+  .nav button:hover{color:var(--ink);}
+  .nav button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+  /* panels */
+  .panel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+  .panel.active{display:block;}
+  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:0 0 14px;}
+  /* progress timeline */
+  .timeline{list-style:none;margin:0;padding:0;}
+  .timeline li{position:relative;padding:0 0 14px 20px;border-left:2px solid var(--line);}
+  .timeline li:last-child{border-left-color:transparent;}
+  .timeline li::before{content:"";position:absolute;left:-6px;top:2px;width:10px;height:10px;border-radius:50%;background:var(--accent);}
+  .timeline .d{font-size:11px;color:var(--muted);}
+  .timeline .t{font-size:13px;margin-top:2px;}
+  .plan{margin:16px 0 0;padding-left:18px;font-size:13px;line-height:1.8;}
+  /* docs tree */
+  .tree{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;}
+  .tree details{margin:2px 0;}
+  .tree summary{cursor:pointer;padding:2px 0;color:var(--ink);}
+  .tree summary::marker{color:var(--muted);}
+  .tree .leaf{padding:2px 0 2px 18px;color:var(--muted);}
+  .tree .note{color:var(--muted);font-family:inherit;font-size:12.5px;margin-bottom:10px;}
+  /* tables */
+  table.t{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.t th,table.t td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+  table.t th{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;}
+  table.t tr:last-child td{border-bottom:none;}
+  .empty{color:var(--muted);font-size:12.5px;padding:6px 0;}
+  /* attempts */
+  details.attempt{border:1px solid var(--line);border-radius:10px;padding:6px 12px;margin-bottom:10px;}
+  details.attempt summary{cursor:pointer;font-size:13px;font-weight:600;}
+  details.attempt .meta{color:var(--muted);font-size:11.5px;margin:6px 0 8px;}
+  /* feedback */
+  .fab{position:fixed;right:22px;bottom:22px;z-index:40;}
+  .fab button{all:unset;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;padding:11px 16px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(20,40,90,.22);}
+  .fbpanel{position:fixed;right:22px;bottom:74px;width:320px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;display:none;z-index:41;box-shadow:0 12px 40px rgba(20,40,90,.22);}
+  .fbpanel.open{display:block;}
+  .fbpanel h4{margin:0 0 10px;font-size:13px;}
+  .fbpanel label{display:block;font-size:11px;color:var(--muted);margin:8px 0 3px;}
+  .fbpanel input,.fbpanel textarea,.fbpanel select{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:12px;}
+  .fbpanel .submit{all:unset;cursor:pointer;display:block;text-align:center;margin-top:12px;background:var(--accent);color:#fff;border-radius:8px;padding:9px;font-size:12.5px;font-weight:600;}
+  .fbpanel .note{font-size:10.5px;color:var(--muted);margin-top:8px;line-height:1.5;}
+</style>
+</head>
+<body>
+  <!-- persistent brand: Back to dashboard (maps to site root "/" in deployment) -->
+  <div class="topbrand">
+    <a class="back" href="../../reasoning-overview/PROJECT_DASHBOARD.html" title="In deployment this is the site root /">&larr; Back to dashboard</a>
+    <div class="right">
+      <span class="ver" id="ver"></span>
+      <button class="refresh" onclick="forceFreshReload()">Check freshness</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h1 class="title" id="title"></h1>
+    <div class="sub">Project map · generated from Markdown &amp; <code>_ai/</code> · never edited by hand</div>
+
+    <!-- persistent overview -->
+    <section class="overview" id="overview"></section>
+
+    <!-- nav -->
+    <nav class="nav">
+      <button data-view-target="progress" class="active" onclick="showView('progress',this)">Progress</button>
+      <button data-view-target="docs" onclick="showView('docs',this)">Docs</button>
+      <button data-view-target="tasks" onclick="showView('tasks',this)">Tasks</button>
+      <button data-view-target="materials" onclick="showView('materials',this)">Materials</button>
+      <button data-view-target="references" onclick="showView('references',this)">References</button>
+    </nav>
+
+    <section class="panel view active" data-view="progress"><h2>Progress</h2><div id="v-progress"></div></section>
+    <section class="panel view" data-view="docs"><h2>Docs</h2><div id="v-docs"></div></section>
+    <section class="panel view" data-view="tasks"><h2>Tasks</h2><div id="v-tasks"></div></section>
+    <section class="panel view" data-view="materials"><h2>Materials</h2><div id="v-materials"></div></section>
+    <section class="panel view" data-view="references"><h2>References</h2><div id="v-references"></div></section>
+  </div>
+
+  <div class="fab"><button onclick="toggleFb()">Feedback</button></div>
+  <div class="fbpanel" id="fbpanel">
+    <h4>Send feedback</h4>
+    <label>Suggestion</label><textarea rows="2" placeholder="What should change?"></textarea>
+    <label>Reason / evidence</label><input placeholder="Why, and a link if any" />
+    <label>Needs board update?</label><select><option>No</option><option>Yes (Level 2)</option><option>Yes (Level 3 — dashboard too)</option></select>
+    <button class="submit" onclick="fakeSubmit()">Submit</button>
+    <div class="note">Example only — front-end demo; nothing is stored. In the real system this posts to a private store.</div>
+  </div>
+
+<script id="BOARD" type="application/json">{"project": "_PROJECT_TEMPLATE", "version": "2026-07-04-v1", "overview": {"question": "<replace: what does this project answer?>", "scope": "<in / out of scope>", "owner": "—", "priority": "TBD", "status": "template", "next": "Copy to reasoning-project/<name>/ and fill _ai/project_overview.md", "blocker": "", "milestones": ["<checkpoint 1>", "<checkpoint 2>"]}, "progress": [{"date": "2026-07-04", "text": "Template skeleton created."}], "plan": ["Replace every overview field.", "Add your first dated attempt under 0-Project/.", "Sync this board (Level 2) and the dashboard (Level 3)."], "docs": {"note": "Docs index lives in 1-Docs/README.md. This tree mirrors the folder structure.", "tree": [{"name": "1-Docs/", "children": [{"name": "README.md", "note": "fixed index"}]}]}, "tasks": [], "materials": [{"dataset": "<add here>", "source": "e.g. GSM8K (public)", "access": "Public", "version": "TBD", "method": "split/prompt notes", "qc": "needs check", "boundary": "name + aggregate metrics only"}], "references": [{"claim": "<example>", "source": "Author Year, public paper", "evidence": "key result", "effect": "what we will do differently"}]}</script>
+<script>
+  const B = JSON.parse(document.getElementById('BOARD').textContent);
+  const esc = s => (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+  document.getElementById('title').textContent = B.project;
+  document.getElementById('ver').textContent = 'version ' + B.version;
+
+  // overview
+  const o = B.overview;
+  document.getElementById('overview').innerHTML = `
+    <div class="grid">
+      <div class="ov"><b>Question</b><span>${esc(o.question)}</span></div>
+      <div class="ov"><b>Scope</b><span>${esc(o.scope)}</span></div>
+      <div class="ov"><b>Owner</b><span>${esc(o.owner)}</span></div>
+      <div class="ov"><b>Next action</b><span>${esc(o.next)}</span></div>
+    </div>
+    <div class="chips">
+      <span class="chip prio-${esc(o.priority)}">priority: ${esc(o.priority)}</span>
+      <span class="chip status">status: ${esc(o.status)}</span>
+      ${o.blocker?`<span class="chip">blocker: ${esc(o.blocker)}</span>`:''}
+    </div>
+    ${o.milestones&&o.milestones.length?`<ul class="milestones">${o.milestones.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:''}`;
+
+  // progress
+  document.getElementById('v-progress').innerHTML =
+    `<ul class="timeline">${B.progress.map(p=>`<li><div class="d">${esc(p.date)}</div><div class="t">${esc(p.text)}</div></li>`).join('')}</ul>`+
+    (B.plan&&B.plan.length?`<ul class="plan">${B.plan.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'');
+
+  // docs tree (VS Code-style structure tree)
+  function renderTree(nodes){
+    return '<div class="tree">'+nodes.map(nodeHtml).join('')+'</div>';
+  }
+  function nodeHtml(n){
+    if(n.children) return `<details open><summary>${esc(n.name)}</summary>${n.children.map(nodeHtml).join('')}</details>`;
+    return `<div class="leaf">${esc(n.name)}${n.note?` — <span style="color:var(--muted)">${esc(n.note)}</span>`:''}</div>`;
+  }
+  document.getElementById('v-docs').innerHTML =
+    (B.docs.note?`<div class="tree note">${esc(B.docs.note)}</div>`:'')+renderTree(B.docs.tree);
+
+  // tasks (attempts collapsed)
+  document.getElementById('v-tasks').innerHTML = B.tasks.length ? B.tasks.map(a=>`
+    <details class="attempt" ${a.open?'open':''}>
+      <summary>${esc(a.attempt)}</summary>
+      <div class="meta">${esc(a.note||'')}</div>
+      <table class="t"><thead><tr><th>Task</th><th>Owner</th><th>Status</th><th>Evidence</th></tr></thead>
+      <tbody>${a.rows.map(r=>`<tr><td>${esc(r.task)}</td><td>${esc(r.owner)}</td><td>${esc(r.status)}</td><td>${esc(r.evidence)}</td></tr>`).join('')}</tbody></table>
+    </details>`).join('') : '<div class="empty">No attempts yet — the first dated attempt will appear here from <code>0-Project/</code>.</div>';
+
+  // materials
+  document.getElementById('v-materials').innerHTML =
+    `<table class="t"><thead><tr><th>Dataset</th><th>Source</th><th>Access</th><th>Version</th><th>Method</th><th>QC</th><th>Boundary</th></tr></thead>
+     <tbody>${B.materials.map(m=>`<tr><td>${esc(m.dataset)}</td><td>${esc(m.source)}</td><td>${esc(m.access)}</td><td>${esc(m.version)}</td><td>${esc(m.method)}</td><td>${esc(m.qc)}</td><td>${esc(m.boundary)}</td></tr>`).join('')}</tbody></table>`;
+
+  // references
+  document.getElementById('v-references').innerHTML =
+    `<table class="t"><thead><tr><th>Claim</th><th>Source (public)</th><th>Evidence</th><th>Effect</th></tr></thead>
+     <tbody>${B.references.map(r=>`<tr><td>${esc(r.claim)}</td><td>${esc(r.source)}</td><td>${esc(r.evidence)}</td><td>${esc(r.effect)}</td></tr>`).join('')}</tbody></table>`;
+
+  // views (mutually exclusive)
+  function showView(name,btn){
+    document.querySelectorAll('.panel.view').forEach(p=>p.classList.toggle('active',p.dataset.view===name));
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+  }
+  // freshness (analog of forceFreshReload)
+  function forceFreshReload(){ const u=new URL(location.href); u.searchParams.set('v',Date.now()); location.replace(u.toString()); }
+  // feedback
+  function toggleFb(){ document.getElementById('fbpanel').classList.toggle('open'); }
+  function fakeSubmit(){ toggleFb(); alert('Thanks — recorded locally only in this example.'); }
+</script>
+</body>
+</html>

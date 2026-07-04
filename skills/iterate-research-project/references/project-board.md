@@ -22,13 +22,14 @@ Update these first, then sync the board.
 | Source | Board use |
 | --- | --- |
 | `_ai/project_overview.md` | name, description, owner, status, priority, current focus, public boundary |
+| `_ai/project_board_spec.md` | the generation/sync rules that produce this board |
 | `_ai/task_plan.md` | current phase, blockers, next action |
 | `_ai/findings.md` | stable findings, open questions, risks |
 | `_ai/progress.md` | recent meaningful sync and evidence of change |
 | `1-Docs/README.md` | Docs topic index and recently updated docs |
 | project file tree | public-safe first/second-level structure tree |
 | `0-Project/<attempt>/` | attempt cards / collapsed detail blocks |
-| `2-Data/` data card | source, version, access class, QC, allowed use |
+| `2-Data/DATA.md` | source, version, access class, QC, allowed use |
 | `3-Paper_Survey/README.md` | papers, external methods, evidence state |
 | `PROJECT_GUIDELINES.md` | behavior rules, classification rules, sync boundaries |
 
@@ -56,7 +57,7 @@ Do not create a standalone "next step" view. A next step belongs in the top snap
 
 ## 5. Layout Rules
 
-- Put a `Back to portfolio board` link first when a parent dashboard exists.
+- Put a persistent `Back to dashboard` link first, in the upper-left brand area, pointing to `/`. Keep it when creating, copying, publishing, or updating the page.
 - Keep the first viewport utilitarian: this is a research workbench, not a marketing page. Quiet palette (light background, white cards, one accent color), clear status labels, shallow cards.
 - Mobile readable: no horizontal overflow, stacked cards, tappable nav.
 - Use collapsed `<details>` for attempts and the structure tree. A closed attempt shows name, status, recent sync, and a one-line conclusion.

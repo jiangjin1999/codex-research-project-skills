@@ -1,82 +1,74 @@
-# Portfolio Board (roadmap / overview page)
+# Portfolio Dashboard Contract (PROJECT_DASHBOARD.html)
 
-Use this reference when creating, reviewing, or synchronizing the portfolio board — the whole-portfolio page that lives in `overview/` (for example `overview/roadmap.html` or `overview/PORTFOLIO_BOARD.html`). It is a roadmap and navigation map, not a project board and not a full log.
+Read this before creating or significantly changing the portfolio dashboard. The dashboard is `<slug>-overview/PROJECT_DASHBOARD.html`: a team-browsable current-state console. It shows current state, the project portfolio, data classification, usage rules, deployment status, and a feedback intake — never a real file browser, data entry point, or execution log.
 
-## 1. Purpose
+## Positioning
 
-The portfolio board should help a collaborator answer:
+- The dashboard should feel like a portfolio-management / control console, visually distinct from any single-project research roadmap.
+- It is a map and navigation surface. Detailed work stays in each project's documents and `_ai` memory.
+- Keep it public-safe: no real local paths, private data, secrets, or clickable internal files.
 
-- What is this portfolio and where is it going (roadmap, phases)?
-- Which projects exist, who owns them, what is their status and next action?
-- What shared data and governance boundaries apply?
-- Which cross-project decisions need a human?
-- Where do I click to reach a specific project's own board?
+## Layout
 
-It is **not** a single project's `PROJECT_BOARD.html`, a full execution log, or a place for raw/private data and absolute paths.
+- **Narrow sidebar:** title, version status, and exactly three nav items — `Project Board`, `Data Board`, `Usage Guidelines`. Do not put the Portfolio Overview in the nav.
+- **Project focus** (weaker block under the nav): owner filter, priority filter, and a subtle matching-project list. Default is all owners + all priorities. These filters are session-only UI state: they reset on refresh and are never written to browser or server state.
+- **Persistent Portfolio Overview** in the main content, always visible above the views: compact and low height. It summarizes only project count, dataset count, project abbreviations, and dataset abbreviations. No roadmap phases, no long explanatory text.
+- **Three mutually-exclusive views** below the overview: clicking one shows only that view plus the persistent overview.
+- **Feedback launcher:** a fixed bottom-right floating button opening a feedback panel (contributor, category, related location, comment). Do not let it occupy the sidebar or cover the main content.
+- **Theme selector:** a small cornered floating control (top-right). Support multiple styles via CSS variables / role tokens (not duplicated layouts); default to a light, readable style with darker/colorful options. Store the choice in browser local storage only.
+- **Mobile:** the sidebar becomes a compact top control area; nav and theme stay tappable; cards stack into one column; long file names, URLs, and model names wrap with `overflow-wrap: anywhere` / `word-break: break-word` and never break the grid.
 
-## 2. Source areas (board is downstream of markdown)
+## View: Project Board (core)
 
-| Source | Board use |
-| --- | --- |
-| `overview/README.md` + registry | roadmap, phases, project cards |
-| `projects/<project>/_ai/project_overview.md` | each project card's status, owner, focus |
-| `projects/<project>/PROJECT_BOARD.html` | link target for each project card |
-| `data/` | shared data sources, versions, governance |
-| `_ai/<date>_<topic>.md` | cross-project handoffs and open decisions |
+- One card per formal project, read top-to-bottom, left-to-right. Provide sort controls (start time, priority).
+- Card top uses editable tags for priority (`low` / `medium` / `high`, `TBD` allowed) and owner (display names only).
+- Card body: status, detailed time, next step, and a project-inner-page link placeholder. Do not include a standalone risk field.
+- Team-fact fields (title, description, time, status, next, page link, priority, owner) should render from a protected server state store first; keep HTML text only as a fallback for failed reads.
+- Editable team facts must persist through the protected state API; do not implement them as DOM-only controls that reset on refresh.
+- The template project is pinned first with a browser-local show/hide toggle (default visible); the toggle affects both the focus list and the main template card, and the template card is exempt from owner/priority filters.
+- External projects may be registered with only a public URL, public summary, status, owner, priority, and next step; never store access tokens, passwords, or internal paths.
 
-If a source does not exist, write `TBD` rather than inventing content.
+## View: Data Board
 
-## 3. Information Architecture
+- Register datasets in a two-level classification: a primary access boundary (e.g. `Public` / `Private`) and a secondary data type inside each boundary.
+- Distinguish actual datasets from classification dimensions. Do not count skills, workflows, tools, or category names as datasets. The compact overview lists actual registered datasets only.
+- Leave categories visibly empty until real datasets are registered under them.
 
-Use a narrow left nav or compact top nav. Default to the Roadmap view. Keep views mutually exclusive.
+## View: Usage Guidelines
 
-| View | Show | Avoid |
-| --- | --- | --- |
-| Roadmap (default) | long-term main line, phases, how projects relate, one current-focus line | per-project task detail, raw logs |
-| Projects | one card per project: goal, owner, priority, status, next action, blocker, link to its board | full project histories, private notes |
-| Data | shared sources, access class, version, QC, governance, export boundary | row-level examples, private samples, paths |
-| References | cross-project papers and method sources rolled up from projects | vague inspirations without evidence |
-| Skills / Handoff | operating rules, shared skills, recent cross-project handoffs | long command logs |
+Three parts, in this order:
 
-Do not create a standalone "next step" view. Next actions live on each project card, in the registry, and in the current-focus line.
+1. **Big-project idea:** small structure cards that match the top-level core folders one-to-one, showing the real folder names `<slug>-overview`, `<slug>-data`, `<slug>-project`, `<slug>-ai` and each function. The root `PROJECT_GUIDELINES.md` is described as the global-rule file, not a folder card.
+2. **Single-project iteration:** the same card format for the `_PROJECT_TEMPLATE` core folders `0-Project`, `1-Docs`, `2-Data`, `3-Paper_Survey`, `4-Skills`, `_ai`, each with the real folder name and function. Write `0-Project` as the real folder name, not an abstract step. Keep only explanatory text and folder cards here — no separate rule strip.
+3. **Behavior norms:** split into `Everyday use` (creating, updating, syncing, cross-project judgment during iteration) and `Initialization` (Git identity/setup, preparation before creating or taking over a project). Long explanations collapse into a corner help layer. Behavior-norm card edits, highlight flags, added cards, and card order are team facts and must persist through the protected state store.
 
-## 4. Layout Rules
+This view also states the single-project collaboration frame: the single-project HTML is a project map, Docs keeps only one fixed `README.md` entry, and AI indexes/synchronizes and asks a human on conflicts or high-impact gaps. It reminds users of the working-directory rule, the project data-management rule, Git identity, modular collaboration language, and high-impact rule confirmation.
 
-- Default view must be the Roadmap. Name the file and page `roadmap`/`portfolio board`, not `dashboard`.
-- Each project card links to `projects/<project>/PROJECT_BOARD.html` (or the deployed public copy).
-- Quiet workbench styling: light background, white cards, one accent color, clear status labels; responsive and mobile-readable.
-- Show a visible version / recent-sync marker.
-- If views are mutually exclusive, switch them reliably: `showView()` toggles an `active` class **and** sets `hidden`/`aria-hidden` on inactive sections, backed by a CSS rule that hides every non-active `.view-section`. Verify no other view's sections stay visible in each nav item.
+## Persistence Model
 
-## 5. Board ↔ folder coordination
+- Team facts (priority, owner, status, next, board card text, behavior-norm cards) → protected server state store; HTML is fallback only.
+- Personal preferences (theme, sort mode, active tab, template show/hide, focus filters) → browser local storage or session only; never team state.
+- Changing one project's owner must not trigger a full re-sort or visible jump; re-sort only on explicit sort change, a priority change that affects sort, or first load.
 
-The portfolio board mirrors the folder contract:
+## Deployment And Freshness
 
-```text
-overview/   → Roadmap view + registry
-projects/   → Projects view (one card per projects/<project>/, linking to its PROJECT_BOARD.html)
-data/       → Data view
-_ai/        → Skills / Handoff view
-```
+- Page version uses `YYYY-MM-DD-vN`, shown with a top-left freshness indicator and a manual refresh action.
+- Publish only public-safe HTML and the minimal API; never expose Markdown, scripts, logs, pid files, or raw feedback as pages. See `public-sharing.md`.
 
-Keep this mapping stable so a collaborator can move between the board and the folders without surprise.
-
-## 6. Sync Scale
+## Sync Scale
 
 | Level | Trigger | Update |
 | --- | --- | --- |
-| 0 | Read-only exploration | Nothing |
-| 1 | Local project change | Project files and `_ai` only |
-| 2 | Project status, blocker, evidence, or next action changed | Registry + Projects view card |
-| 3 | Roadmap phase, public view, shared data rule, ownership, or cross-project rule changed | Registry, board (Roadmap + affected views), and cross-project handoff |
+| 0 | Read-only exploration, no new decision | No dashboard change |
+| 1 | Minor action or finding | Markdown/log only |
+| 2 | New project card fact, status, blocker, next action, dataset, or usage rule | Update the relevant view/card and the source Markdown |
+| 3 | Public claim, phase, deployment/version, or a long-term operating rule | Update the dashboard, the published copy, the requirements log, and source Markdown |
 
-## 7. QA checklist
+## QA Checklist
 
-Before handoff:
-
-- each project card's status matches that project's `_ai/project_overview.md`;
-- each project card links to a real `PROJECT_BOARD.html`;
-- Data statements match `data/`;
-- the default view is the Roadmap and each nav item shows only its own view;
-- no private data, credentials, private filenames, or absolute paths are present;
-- version / recent-sync is updated.
+- Only the persistent overview and one view are visible at a time; switching hides the others (class toggle plus `hidden`/`aria-hidden`).
+- Links point to public pages (`/projects/<slug>/`) or clearly-marked placeholders, never local paths.
+- Folder cards in Usage Guidelines match the real folder tokens exactly.
+- No private data, secrets, or real local paths anywhere.
+- Desktop and mobile both readable; long tokens wrap.
+- Every dashboard change is mirrored in the dashboard requirements log and the published copy.

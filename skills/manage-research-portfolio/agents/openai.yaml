@@ -1,4 +1,4 @@
 interface:
   display_name: "Research Portfolio Manager"
-  short_description: "Manage a multi-project research portfolio and its board"
-  default_prompt: "Use $manage-research-portfolio to organize this research portfolio and keep its board in sync."
+  short_description: "Manage a multi-project research portfolio and its PROJECT_DASHBOARD.html"
+  default_prompt: "Use $manage-research-portfolio to organize this research portfolio and keep its dashboard board in sync."

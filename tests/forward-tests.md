@@ -1,6 +1,6 @@
 # Forward Tests
 
-These lightweight tests check whether the skills give clear, repeatable behavior for realistic prompts.
+These lightweight tests check whether the skills give clear, repeatable behavior for realistic prompts. The examples use slug = `reasoning` (see `examples/llm-reasoning-portfolio/`).
 
 ## Test 1: Create an LLM reasoning portfolio
 
@@ -12,11 +12,11 @@ Use $manage-research-portfolio to organize a portfolio for LLM reasoning researc
 
 Expected behavior:
 
-- Use the four-area portfolio structure: `overview/`, `projects/`, `data/`, `_ai/`.
-- Create or update `overview/PROJECT_REGISTER.md` with three projects (goal, priority, owner, status, next action, blocker, evidence, last sync).
-- Copy `projects/template-project/` for each project instead of inventing a new layout.
-- Create or sync the portfolio board `overview/roadmap.html` (Roadmap default + Projects/Data/References/Skills views), each project card linking to that project's `PROJECT_BOARD.html`.
-- Keep the public summary high level and source-safe.
+- Use the four prefixed portfolio areas: `reasoning-overview/`, `reasoning-project/`, `reasoning-data/`, `reasoning-ai/`.
+- Create or update the registry `reasoning-project/README.md` with three projects (question, priority, owner, status, next action, blocker, evidence, last sync), with the `_PROJECT_TEMPLATE` row pinned first.
+- Copy `reasoning-project/_PROJECT_TEMPLATE/` for each project instead of inventing a new layout.
+- Create or sync the portfolio dashboard `reasoning-overview/PROJECT_DASHBOARD.html`: a persistent Portfolio Overview plus three views — Project Board (default), Data Board, Usage Guidelines — with the template card pinned first and each project card linking to that project's `PROJECT_BOARD.html`.
+- Ship a sanitized `reasoning-overview/public-dashboard/` copy (landing + one page per project) and keep the public summary high level and source-safe.
 
 Status: pass by example inspection (`examples/llm-reasoning-portfolio/`).
 
@@ -31,11 +31,11 @@ Use $iterate-research-project. This Tree of Thoughts paper should become paper e
 Expected behavior:
 
 - Classify the paper under `3-Paper_Survey/` (note + `evidence-matrix.md` row), not at the project root.
-- Create `0-Project/<date>_tot-search-depth/` for the concrete attempt with hypothesis, inputs, and metrics.
+- Create `0-Project/<date>_tot-search-depth/` for the concrete attempt with its own `data/docs/outputs/reports/scripts` and a `TASK_BOARD.md`.
 - Link the paper implication to the attempt's question and method.
 - Update `_ai/task_plan.md` (next action) and `_ai/progress.md` (dated entry).
-- Sync the project board `PROJECT_BOARD.html` only when a Level 2+ change occurs (new attempt, blocker, next action, status); markdown first, board second.
-- Update the portfolio registry/board only if project status or next action changes.
+- Sync the project board `PROJECT_BOARD.html` only when a Level 2+ change occurs (new attempt, blocker, next action, status); the new attempt shows in the Tasks view and the References view gains the paper. Markdown first, board second.
+- Update the portfolio dashboard only if project status, owner, priority, or next action changes (Level 3).
 
 Status: pass by skill rule inspection.
 
@@ -50,10 +50,10 @@ Use $iterate-research-project. We may use a restricted benchmark export for erro
 Expected behavior:
 
 - Do not copy records or examples into public summaries or onto the board.
-- Record source, access class, version, allowed locations, QC state, and public boundary as a data card under `2-Data/`.
+- Record source, access class, version, allowed locations, QC state, and public boundary in `2-Data/DATA.md`.
 - Ask the user to confirm storage and sharing boundaries before changing defaults or exposing details (a Level 3 change).
 - Keep project status as `needs review` or equivalent until evidence and permission are clear.
-- Show only the dataset name and aggregate boundary in the board's Data view.
+- Show only the dataset name and aggregate boundary in the board's Materials view, and classify it under Private on the dashboard's Data Board.
 
 Status: pass by skill rule inspection.
 
@@ -69,7 +69,19 @@ Expected behavior:
 
 - Record the failed run in the attempt folder and `_ai/progress.md`/`findings.md` (Level 1).
 - Do NOT add the raw run to the board; the board keeps the current-state snapshot and view summaries.
-- Only if the failure changes status, blocker, or next action does the board's top snapshot / Progress view update (Level 2).
-- No standalone "next step" view is created; the next action lives in the top snapshot and `_ai/task_plan.md`.
+- Only if the failure changes status, blocker, or next action does the persistent overview / Progress view update (Level 2).
+- The next action lives in the persistent overview and `_ai/task_plan.md`; the five views stay Progress / Docs / Tasks / Materials / References.
 
 Status: pass by skill rule inspection.
+
+## Structural parity check
+
+`examples/llm-reasoning-portfolio/` is built to the exact structure both skills describe. To re-verify after edits:
+
+- Portfolio areas exist and are prefixed: `reasoning-overview`, `reasoning-project`, `reasoning-data`, `reasoning-ai`.
+- `reasoning-overview/PROJECT_DASHBOARD.html` has a persistent overview and exactly three mutually-exclusive views; `public-dashboard/` mirrors it with per-project pages.
+- Every project (and `_PROJECT_TEMPLATE`) has `0-Project/1-Docs/2-Data/3-Paper_Survey/4-Skills/_ai` plus root `README.md/PROJECT_GUIDELINES.md/PROJECT_BOARD.html/GIT_WORKFLOW.md/.gitignore/scripts/init_project_git.sh`.
+- Every `PROJECT_BOARD.html` has a persistent Back-to-dashboard link, a version status, a persistent overview, and five views.
+- Banned-term scan stays clean (no private names, datasets, or paths).
+
+Status: pass (`python3 /tmp/validate_html.py`-style well-formedness + link checks; banned-term scan clean).
