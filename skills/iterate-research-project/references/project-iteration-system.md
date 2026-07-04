@@ -71,7 +71,7 @@ Keep `_ai/project_board_spec.md` as the durable board contract so any collaborat
 - **New idea → new subproject.** When you want to try something, start a fresh `0-Project/<date>_<name>/` instead of overwriting or endlessly re-iterating an existing attempt.
 - **Don't fear duplication.** Parallel subprojects that reuse code, config, or data are fine; they keep results comparable and the history legible.
 - **Keep each subproject small and single-purpose** so it is easy to read, compare, and abandon.
-- **Promote when it earns it.** If a subproject grows its own data, roadmap, and audience, graduate it into a full project in the portfolio.
+- **Promote when it earns it.** If a subproject grows its own data, roadmap, and audience, graduate it into a full project of its own (registering it in the portfolio if you use one).
 
 This keeps iteration append-only: an accumulating, readable trail of what was tried — instead of one mutable blob.
 
@@ -111,4 +111,4 @@ After a meaningful iteration, check whether to update:
 - `_ai/project_overview.md` if goal, status, scope, blocker, or next action changed;
 - `_ai/task_plan.md`, `_ai/findings.md`, and `_ai/progress.md`;
 - `PROJECT_BOARD.html` per the Sync Scale in the skill;
-- the portfolio registry/dashboard if the project-level state changed.
+- the portfolio registry/dashboard if the project-level state changed and the project belongs to a portfolio.

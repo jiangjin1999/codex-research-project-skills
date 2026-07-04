@@ -1,6 +1,6 @@
 ---
 name: iterate-research-project
-description: Iterate one research project with evidence and keep its PROJECT_BOARD.html board in sync. Use when Codex needs to classify and place project material into attempts, docs, data notes, literature, project-local skills, or AI working memory; set up or maintain the folders 0-Project, 1-Docs, 2-Data, 3-Paper_Survey, 4-Skills, and _ai; write the entry files README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md and the PROJECT_BOARD.html board; keep the _ai working memory (project_overview, project_board_spec, task_plan, findings, progress); track repeated attempts, failed paths, provenance, QC, paper evidence, decisions, status, next actions; and follow the markdown-first then board Sync Scale inside a single project.
+description: Iterate one research project with evidence and keep its PROJECT_BOARD.html board in sync. Works standalone for a single project, or inside a portfolio managed by manage-research-portfolio. Use when Codex needs to classify and place project material into attempts, docs, data notes, literature, project-local skills, or AI working memory; set up or maintain the folders 0-Project, 1-Docs, 2-Data, 3-Paper_Survey, 4-Skills, and _ai; write the entry files README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md and the PROJECT_BOARD.html board; keep the _ai working memory (project_overview, project_board_spec, task_plan, findings, progress); track repeated attempts, failed paths, provenance, QC, paper evidence, decisions, status, next actions; and follow the markdown-first then board Sync Scale inside a single project.
 ---
 
 # Iterate Research Project
@@ -14,7 +14,7 @@ Two rules run through everything:
 
 And one habit that drives iteration: **new idea → new subproject.** Experiment attempts are the core of the work. When there is something to try, create a fresh `0-Project/<date>_<slug>/` and iterate there instead of overwriting or endlessly re-iterating one attempt. Keep subprojects small and single-purpose; don't fear duplication. This keeps history append-only and comparable (see `references/project-iteration-system.md`).
 
-This project usually lives inside a portfolio (`<slug>-project/<project>/`). When status, owner, priority, or public state changes, sync up to the portfolio dashboard using the `manage-research-portfolio` skill.
+**Standalone or inside a portfolio.** This skill is self-contained: use it on its own for a single project at any path — no portfolio required. Everything the project needs (folders, entry files, board, working memory, git policy) lives inside the project folder. *Optionally*, when the project sits inside a portfolio (`<slug>-project/<project>/`), sync status, owner, priority, and public state up to the portfolio dashboard with the `manage-research-portfolio` skill. When you run standalone, skip every "portfolio dashboard" and "registry" step in this skill — they are optional integrations, never prerequisites.
 
 ## Project Contract
 
@@ -68,7 +68,7 @@ If classification changes project scope, evaluation criteria, data boundary, pub
 
 Basic elements:
 
-- **Back link** (persistent): a `Back to dashboard` link at the very front of the page, in the upper-left brand area, pointing to `/`. Preserve it when creating, copying, publishing, or updating the page.
+- **Home / back link** (persistent): a link at the very front of the page, in the upper-left brand area. Inside a portfolio, make it a `Back to dashboard` link pointing to the site root `/`; standalone, either omit it or point it to the project's own `README.md`. Preserve whatever you choose when creating, copying, publishing, or updating the page.
 - **Version status:** page version `YYYY-MM-DD-vN` and last-sync marker (optionally a freshness/refresh control).
 - **Top overview** (always visible, light): project name, one-sentence description, status, owner, recent sync, current focus, and at most one short progress line. Source: `_ai/project_overview.md`. Do not put phase lists, version cards, attempt lists, or long-term routes here.
 - **Five mutually-exclusive views**, each mapped to a folder:
@@ -102,7 +102,7 @@ Judge every change against this scale before editing the board.
 | 0 | Read-only exploration, no new decision | Nothing |
 | 1 | Minor finding, small failed branch, temporary note | Markdown or `_ai` only |
 | 2 | New artifact/path/QC result, blocker, next action, status, docs map, structure tree, data boundary, reference, or attempt changed | Source markdown or `_ai`, then sync `PROJECT_BOARD.html` |
-| 3 | Phase, milestone, public claim, owner, priority, or public state changed | Source markdown, board, `PROJECT_GUIDELINES.md`, and the portfolio dashboard |
+| 3 | Phase, milestone, public claim, owner, priority, or public state changed | Source markdown, board, `PROJECT_GUIDELINES.md`, and — only if the project belongs to a portfolio — the portfolio dashboard |
 
 Do not sync the board on every edit. Sync when a collaborator would need the new state.
 

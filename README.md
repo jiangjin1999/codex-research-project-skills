@@ -13,6 +13,14 @@ Two Codex skills for organizing research work that grows across many projects an
 
 The skills are instruction-first. They use `references/` for detailed patterns and avoid scripts in v1 because the work is mostly classification, judgment, and synchronization. The portfolio areas are prefixed with the portfolio's own slug (e.g. the LLM-reasoning example uses `reasoning-overview`, `reasoning-project`, `reasoning-data`, `reasoning-ai`).
 
+**Use them together, or either one alone.** Neither skill requires the other:
+
+- **`iterate-research-project` is fully standalone.** Point it at a single project folder anywhere and you get the full structure, board, working memory, and git policy — no portfolio, no dashboard, no registry needed. Every "portfolio dashboard" step in that skill is an *optional* integration you can ignore when running solo.
+- **`manage-research-portfolio`** adds the shared dashboard, project registry, global data governance, and cross-project handoffs once you are running several projects.
+- **Together they compose:** the portfolio scaffolds and syncs the single-project skill automatically; used alone, each still stands on its own.
+
+If you only ever manage one project, install just `iterate-research-project`.
+
 ## How to use these well
 
 These skills encode a *way of working*, not just a folder layout. The rules live in **behavior-guideline Markdown** (`PROJECT_GUIDELINES.md`, `GIT_WORKFLOW.md`, and each `SKILL.md`) that the agent reads and follows — so the system keeps itself in order as you work, and **you can extend it by adding your own guideline files**. Add a rule to a guideline file and every future action honors it.
@@ -25,7 +33,7 @@ These skills encode a *way of working*, not just a folder layout. The rules live
 
 ### 2. Single project — the real work is small subprojects
 
-This is the heart of the system. Most research iteration is five recurring kinds of work:
+This is the heart of the system, and it works **with or without a portfolio** — `iterate-research-project` is complete on its own. Most research iteration is five recurring kinds of work:
 
 | Kind of work | Home | Note |
 | --- | --- | --- |

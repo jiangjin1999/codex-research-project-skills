@@ -57,7 +57,7 @@ Do not create a standalone "next step" view. A next step belongs in the top snap
 
 ## 5. Layout Rules
 
-- Put a persistent `Back to dashboard` link first, in the upper-left brand area, pointing to `/`. Keep it when creating, copying, publishing, or updating the page.
+- Put a persistent home/back link first, in the upper-left brand area. Inside a portfolio, make it a `Back to dashboard` link pointing to the site root `/`; standalone, omit it or point it to the project's own `README.md`. Keep whatever you choose when creating, copying, publishing, or updating the page.
 - Keep the first viewport utilitarian: this is a research workbench, not a marketing page. Quiet palette (light background, white cards, one accent color), clear status labels, shallow cards.
 - Mobile readable: no horizontal overflow, stacked cards, tappable nav.
 - Use collapsed `<details>` for attempts and the structure tree. A closed attempt shows name, status, recent sync, and a one-line conclusion.
@@ -78,7 +78,7 @@ Do not create a standalone "next step" view. A next step belongs in the top snap
 
 ## 8. Public-safe copy
 
-If the project has a shareable copy, keep a separate public path (for example `public/projects/<slug>/index.html`). Copy only reviewed HTML and required static assets. Never expose markdown, scripts, logs, caches, raw or derived data, or private files. Remove or replace local absolute paths and keep the back link pointing at the deployed dashboard root.
+If the project has a shareable copy, keep a separate public path (for example `public/projects/<slug>/index.html`). Copy only reviewed HTML and required static assets. Never expose markdown, scripts, logs, caches, raw or derived data, or private files. Remove or replace local absolute paths. If the copy is published under a portfolio dashboard, keep the back link pointing at that deployed dashboard root; if it is published on its own, point the link at the project's public landing page or drop it.
 
 ## 9. QA checklist
 
