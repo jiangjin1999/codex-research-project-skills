@@ -14,6 +14,14 @@ Two rules run through everything:
 
 And one habit that keeps the portfolio alive: **a project can start from any path.** When a new project appears, scaffold it from `_PROJECT_TEMPLATE`, add it to the registry, and sync its card onto the dashboard — so status flows *up* automatically. These behaviors are driven by the portfolio's guideline files (`PROJECT_GUIDELINES.md`, this skill); extend them by adding rules, and future actions follow. This is what makes multi-owner, multi-project management sustainable.
 
+Use three portfolio lanes:
+
+- **Mainline** — active or formally preparing projects with evidence, owner/status/next fields, and default dashboard visibility.
+- **Parked** — future plans or possible projects that should be remembered but should not yet enter the project template, registry mainline, or dashboard default flow.
+- **Archived** — abandoned, deprecated, or superseded projects preserved with a stop reason, evidence, and reactivation condition.
+
+Do not turn every idea into a live project. Park early ideas cheaply; promote only when a decision, owner, concrete next action, or coordination need exists.
+
 ## Start Here
 
 1. Identify scope before editing:
@@ -21,6 +29,8 @@ And one habit that keeps the portfolio alive: **a project can start from any pat
    - Cross-project AI context and handoffs: `<slug>-ai/`
    - Data governance, data inventory, access boundaries: `<slug>-data/`
    - A concrete research project: `<slug>-project/<project-name>/`
+   - Future or possible project idea: `<slug>-overview/_PROJECT_PARKING_LOT.md` or a clearly marked parked section in the registry
+   - Abandoned/deprecated project: `<slug>-overview/_PROJECT_ARCHIVE.md` or `<slug>-project/_archive/`, with stop reason and evidence
    - After a project exists, run project-specific edits from that project root as the working directory, not from the portfolio root. Use the portfolio root / `<slug>-overview` only for overview, deployment, global rules, global skills, or cross-project synchronization.
 2. Read the smallest useful context first: `<slug>-overview/README.md` for intent, the project registry, and any recent `<slug>-ai/<date>_<topic>.md` handoff related to the request.
 3. For a concrete project, switch to that project and use the `iterate-research-project` skill (root `PROJECT_GUIDELINES.md`, `_ai/project_overview.md`, `_ai/project_board_spec.md`, then the numbered folders).
@@ -60,6 +70,8 @@ Modular collaboration language — encourage the user to name the module type in
 
 - "This is a document" → one topic/meeting/method/decision; project `1-Docs/` + update `1-Docs/README.md`.
 - "This is a small project / attempt" → one concrete experiment or route; project `0-Project/<attempt-name>/`.
+- "This is a future project idea" → parked lane first; do not scaffold or dashboard it until promoted.
+- "This project is deprecated / abandoned" → archived lane with stop reason, replacement if any, evidence, and reactivation condition.
 - "This is data information" → source/version/permissions/QC/boundary; project `2-Data/DATA.md`.
 - If unsure, classify first, explain the landing place, then edit.
 
@@ -90,7 +102,14 @@ See `references/portfolio-board.md` for the full dashboard contract. A small por
 
 ## Project Registry
 
-Keep the registry in `<slug>-overview/` (mirror a short index in `<slug>-project/README.md`). Represent each project with: Project (folder/short name), Goal, Priority (`TBD`/`low`/`medium`/`high`), Owner (or `TBD`), Status (`proposed`/`planning`/`preparing`/`active`/`blocked`/`paused`/`done`/`archived`), Next action, Blocker, Evidence, Last sync. Status must have evidence; without it keep `TBD`, `preparing`, `active`, or `needs review`.
+Keep the registry in `<slug>-overview/` (mirror a short index in `<slug>-project/README.md`). Represent mainline projects with: Project (folder/short name), Goal, Priority (`TBD`/`low`/`medium`/`high`), Owner (or `TBD`), Status (`proposed`/`planning`/`preparing`/`active`/`blocked`/`paused`/`done`/`archived`), Next action, Blocker, Evidence, Last sync. Status must have evidence; without it keep `TBD`, `preparing`, `active`, or `needs review`.
+
+Keep parked and archived work separate:
+
+| Lane | Minimum fields | Promotion / exit rule |
+| --- | --- | --- |
+| Parked future plan | Idea, why it matters, trigger to revisit, possible owner, evidence/source | Promote to mainline only when it has a concrete next action or coordination need |
+| Archived/deprecated project | Stop reason, replacement/superseded-by, last evidence, what not to repeat, reactivation condition | Keep out of default dashboard unless reviewing history or reactivating |
 
 ## New Project Creation
 

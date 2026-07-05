@@ -8,6 +8,7 @@ This file is the running specification for the portfolio dashboard. Describe a c
 - **Sidebar navigation:** exactly three items — `Project Board`, `Data Board`, `Usage Guidelines`. Views are mutually exclusive; switching hides the others completely.
 - **Persistent Portfolio Overview:** always visible above the active view. Shows only stable summary facts: number of projects, number of tracked datasets, and an abbreviation/term list. No roadmap phases, no timeline, no long narrative.
 - **Project Board (default view):** the core. One card per project with an editable priority tag (`low` / `medium` / `high` / `TBD`), an owner tag, status, last-updated time, the single next action, and a link to the project page. The template card is pinned first as the "how to add a project" reference.
+- **Portfolio lanes:** the default Project Board shows mainline projects only. Future plans live in `_PROJECT_PARKING_LOT.md` or a parked lane until promoted; abandoned or deprecated projects live in `_PROJECT_ARCHIVE.md` / `_archive/` with stop reason and evidence.
 - **Project-focus filters:** owner filter and priority filter above the Project Board. Filters are session-only (not persisted) and never delete data.
 - **Data Board:** two-level classification — first by access class (`Private` / `Public`), then by category. Shows dataset name, role, version, QC state, and public boundary. No raw records.
 - **Usage Guidelines:** three parts — (1) big-project idea, shown as folder-cards for the four portfolio areas; (2) single-project iteration, shown as folder-cards for the six template folders; (3) behavior norms, split into everyday use and initialization.
@@ -24,4 +25,5 @@ This file is the running specification for the portfolio dashboard. Describe a c
 
 ## Change log (newest first)
 
+- `2026-07-05-lanes` — clarified that parked future plans and archived/deprecated projects are secondary lanes, not default Project Board work.
 - `2026-07-04-v1` — initial dashboard: overview + three views, focus filters, pinned template card, theme selector, feedback launcher, version status.

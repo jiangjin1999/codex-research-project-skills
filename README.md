@@ -30,6 +30,15 @@ These skills encode a *way of working*, not just a folder layout. The rules live
 - From **any path** in your tree, ask the agent to start a project. Guideline-driven behavior then scaffolds the templated single-project skeleton, registers the project, and updates the portfolio dashboard — you wire nothing by hand.
 - As you make progress, the same guidelines keep status, next action, and the dashboard cards **in sync automatically**; progress flows *up* to the portfolio without a separate step.
 - Because the behavior is just text, it composes: **multiple people in multiple roles across many projects** share one dashboard and one rule set. This is what makes continuous, multi-owner management sustainable.
+- Keep the portfolio in **three lanes**:
+
+  | Lane | What belongs there | Dashboard rule |
+  | --- | --- | --- |
+  | **Mainline projects** | active or formally preparing projects with owner/status/next/evidence | default Project Board |
+  | **Parked plans** | future ideas you may want later, but which are not yet worth full setup or team attention | keep in `_PROJECT_PARKING_LOT.md` or a collapsed section; do not count as active work |
+  | **Archived projects** | abandoned, deprecated, or superseded projects with a stop reason and evidence | keep in `_PROJECT_ARCHIVE.md` or `_archive/`; hide from the default flow unless explicitly reviewing history |
+
+This keeps non-linear thinking visible without letting every possible idea become a live project.
 
 ### 2. Single project — the real work is small subprojects
 
@@ -48,6 +57,12 @@ Treat **experiment attempts as subprojects**, and be generous about creating the
 - **New idea → new subproject.** Don't overwrite or endlessly re-iterate one attempt. When you want to try something, spin up a fresh `0-Project/<date>_<name>/` and iterate there.
 - **Don't fear duplication.** Parallel subprojects that reuse code or data are fine — they keep results comparable and history legible.
 - **Keep each subproject small and single-purpose**, so it is easy to read, compare, and (when needed) abandon.
+- Keep subprojects in the same **mainline / parked / archived** lanes:
+  - **mainline** = current attempts that define the active path;
+  - **parked** = future attempt ideas captured early because thinking is not fully serial, but not yet executed;
+  - **archived** = abandoned or superseded attempts kept with a stop reason so they do not keep distracting the mainline.
+
+Parked ideas can be just a short entry in `_ai/task_plan.md`, `1-Docs/`, or `0-Project/_parking-lot.md`. Archived attempts can live in `0-Project/_archive/` or stay in place with `Status: archived`. Create a full `0-Project/<date>_<name>/` folder only when the idea is concrete enough to need inputs, criteria, or future handoff.
 
 The payoff: iteration becomes **append-only**. You accumulate a readable trail of what you tried instead of one mutable blob — which is exactly what makes an AI collaborator (and future-you) effective.
 
@@ -61,6 +76,7 @@ A few habits that make the above pay off:
 
 - **Follow the Sync Scale.** Decide each change's blast radius (L0 no HTML → L1 Markdown/`_ai` → L2 this board → L3 the portfolio dashboard) and update only what that level needs — trustworthy boards, no busywork.
 - **Status must be evidence-backed.** "Working" means a run, number, or paper you can point to in the matching folder — not a feeling.
+- **Separate remembered ideas from active work.** Future plans are useful, but they should be parked until they have an owner, decision point, or concrete next action. Deprecated work should keep its stop reason and evidence, then leave the default flow.
 - **Give data a boundary before you touch it.** Record source, version, permission, and what may be derived or shared; never let raw sensitive data reach a board or handoff.
 - **Promote a subproject when it earns it.** If an attempt grows its own data, roadmap, and audience, graduate it into a full project in the portfolio and let the dashboard pick it up.
 - **Name for scanning.** `0-Project/2026-07-04_tot-depth-sweep` reads far better in six months than `exp3`.
@@ -73,7 +89,7 @@ Both skills treat a lightweight HTML **board** as the shared, current-state map 
 - **Portfolio dashboard** — `<slug>-overview/PROJECT_DASHBOARD.html`: a control-console page with a persistent **Portfolio Overview** (project count, dataset count, abbreviations) plus exactly three mutually-exclusive views: **Project Board** (one card per project with editable priority/owner tags, status, next action, and a link to that project's own board; the template card is pinned first), **Data Board** (two-level: Private/Public × category), and **Usage Guidelines** (the four portfolio areas, the six project folders, and behavior norms — all as folder-cards). It ships with a sanitized `public-dashboard/` copy (a landing page plus one page per project) that is the only thing you deploy publicly.
 - **Project board** — `<slug>-project/<project>/PROJECT_BOARD.html`: a persistent **Back to dashboard** link (to site root `/`), a version status, an always-visible project overview, and five views — **Progress**, **Docs** (a structure tree), **Tasks** (dated attempts, collapsed), **Materials** (data notes), and **References** (evidence). Every project copies the same board shell, so all project boards are structurally identical.
 
-The board is a **map, not a log**: update Markdown and `_ai/` first, then sync the board. Each board view maps to a folder, so a reader can move between the board and the files without surprise. A **Sync Scale** (L0 no HTML change → L1 Markdown/`_ai` only → L2 this project's board → L3 the portfolio dashboard) says when a change must reach the board, the registry, and handoffs.
+The board is a **map, not a log**: update Markdown and `_ai/` first, then sync the board. Each board view maps to a folder, so a reader can move between the board and the files without surprise. A **Sync Scale** (L0 no HTML change → L1 Markdown/`_ai` only → L2 this project's board → L3 the portfolio dashboard) says when a change must reach the board, the registry, and handoffs. Parked and archived work should be visible only as a separate collapsed/secondary lane, not mixed into the active default view.
 
 ## Install
 
@@ -139,10 +155,13 @@ Set it up and keep it honest as it evolves:
    status/next/plan -> _ai/ working memory.
 3. Iterate by SUBPROJECT: every new idea = a new 0-Project/<date>_<name>/ attempt. Don't overwrite or
    endlessly re-iterate one attempt; keep each small and single-purpose; don't fear duplication.
-4. Markdown first, board second: update the source .md / _ai note, THEN sync PROJECT_BOARD.html
+4. Separate lanes: active attempts stay in the mainline; future ideas go to `0-Project/_parking-lot.md`
+   or a parked attempt folder; abandoned/superseded attempts go to `0-Project/_archive/` or stay
+   marked archived with a stop reason and evidence.
+5. Markdown first, board second: update the source .md / _ai note, THEN sync PROJECT_BOARD.html
    (5 views: Progress, Docs, Tasks/attempts, Materials/data, References). The board is a map, not a log —
    no raw logs, private data, or absolute paths. Back link is optional when standalone.
-5. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
+6. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
    logs, caches, or secrets.
 
 Confirm the plan, then create the structure and the board.
@@ -171,7 +190,10 @@ Do this:
 4. Keep the whole thing in sync by the Sync Scale: L0 none -> L1 markdown/_ai only -> L2 this project's
    board -> L3 the portfolio dashboard/registry. A project can be started from any path and then
    registered + synced up automatically.
-5. Public-safe only: no raw sensitive data, credentials, identity-bearing records, or absolute paths in
+5. Keep active work separate from remembered work: mainline projects appear on the default dashboard;
+   parked future plans live in `_PROJECT_PARKING_LOT.md`; archived/deprecated projects live in
+   `_PROJECT_ARCHIVE.md` or `_archive/` until promoted or explicitly reviewed.
+6. Public-safe only: no raw sensitive data, credentials, identity-bearing records, or absolute paths in
    any .md, HTML, public dashboard, or handoff. Use my own git identity; stage explicit paths.
 
 Confirm the plan, then create the portfolio, the dashboard, and the first project skeletons.
@@ -197,7 +219,7 @@ Then open:
 - `http://localhost:8137/reasoning-project/reasoning-baselines/PROJECT_BOARD.html` — a project's own five-view board.
 - `http://localhost:8137/reasoning-overview/public-dashboard/` — the sanitized public copy (or run its own `serve.sh`).
 
-Layout: `reasoning-overview/` (dashboard, requirements log, template, public copy), `reasoning-project/` (registry + `_PROJECT_TEMPLATE` + three projects), `reasoning-data/` (shared data catalog), `reasoning-ai/` (cross-project handoff). It uses public papers and benchmarks only:
+Layout: `reasoning-overview/` (dashboard, requirements log, template, `_PROJECT_PARKING_LOT.md`, `_PROJECT_ARCHIVE.md`, public copy), `reasoning-project/` (registry + `_PROJECT_TEMPLATE` + three projects), `reasoning-data/` (shared data catalog), `reasoning-ai/` (cross-project handoff). It uses public papers and benchmarks only:
 
 - Chain-of-Thought Prompting: https://arxiv.org/abs/2201.11903
 - Self-Consistency: https://arxiv.org/abs/2203.11171

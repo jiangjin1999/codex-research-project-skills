@@ -21,6 +21,9 @@ Read this before creating or significantly changing the portfolio dashboard. The
 ## View: Project Board (core)
 
 - One card per formal project, read top-to-bottom, left-to-right. Provide sort controls (start time, priority).
+- Default view is the **mainline**: active or formally preparing projects. Do not let parked ideas or archived/deprecated projects visually compete with the current work.
+- Parked future plans may appear only as a small collapsed "Parking Lot" section or a link to `_PROJECT_PARKING_LOT.md`; they should not count toward active project totals.
+- Archived/deprecated projects may appear only as a collapsed "Archive" section or a link to `_PROJECT_ARCHIVE.md` / `_archive/`, with stop reason and superseded-by/replacement when available.
 - Card top uses editable tags for priority (`low` / `medium` / `high`, `TBD` allowed) and owner (display names only).
 - Card body: status, detailed time, next step, and a project-inner-page link placeholder. Do not include a standalone risk field.
 - Team-fact fields (title, description, time, status, next, page link, priority, owner) should render from a protected server state store first; keep HTML text only as a fallback for failed reads.

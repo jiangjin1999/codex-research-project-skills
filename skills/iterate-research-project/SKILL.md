@@ -14,6 +14,14 @@ Two rules run through everything:
 
 And one habit that drives iteration: **new idea → new subproject.** Experiment attempts are the core of the work. When there is something to try, create a fresh `0-Project/<date>_<slug>/` and iterate there instead of overwriting or endlessly re-iterating one attempt. Keep subprojects small and single-purpose; don't fear duplication. This keeps history append-only and comparable (see `references/project-iteration-system.md`).
 
+Subprojects also have lanes:
+
+- **Mainline** — current attempts that define the active path.
+- **Parked** — future attempt ideas captured early because research thinking is not fully serial, but not yet executed. Default note: `0-Project/_parking-lot.md`.
+- **Archived** — abandoned or superseded attempts kept with a stop reason and evidence. Default folder: `0-Project/_archive/`.
+
+Park cheaply. A future idea can be a short entry in `_ai/task_plan.md`, `1-Docs/`, or `0-Project/_parking-lot.md`; create a full attempt folder only when the idea has enough inputs, criteria, or handoff value.
+
 **Standalone or inside a portfolio.** This skill is self-contained: use it on its own for a single project at any path — no portfolio required. Everything the project needs (folders, entry files, board, working memory, git policy) lives inside the project folder. *Optionally*, when the project sits inside a portfolio (`<slug>-project/<project>/`), sync status, owner, priority, and public state up to the portfolio dashboard with the `manage-research-portfolio` skill. When you run standalone, skip every "portfolio dashboard" and "registry" step in this skill — they are optional integrations, never prerequisites.
 
 ## Project Contract
@@ -54,6 +62,8 @@ When the user gives new material, choose one landing place, then decide whether 
 | User intent | Landing place | Board view it may touch |
 | --- | --- | --- |
 | "This is a concrete experiment / attempt" | `0-Project/<date>_<slug>/` | Tasks (任务尝试) |
+| "This is a future attempt idea" | `_ai/task_plan.md`, `1-Docs/`, or `0-Project/_parking-lot.md`; full attempt folder only if concrete | usually none, or a parked Tasks lane |
+| "This attempt is abandoned / superseded" | keep the attempt folder or move it under `0-Project/_archive/`; mark archived with stop reason, evidence, and replacement | archived/collapsed Tasks lane |
 | "This is a method note / meeting / decision / comparison" | `1-Docs/<date>_<topic>.md` + update `1-Docs/README.md` | Docs Map (文档地图) |
 | "This is data / benchmark information" | `2-Data/DATA.md` | Materials (数据材料) |
 | "This is a paper / external source / evidence" | `3-Paper_Survey/README.md` + evidence matrix | References (参考文献) |
@@ -77,11 +87,11 @@ Basic elements:
   | --- | --- | --- |
   | Progress (项目进度) | `_ai/progress.md`, `_ai/findings.md`, `1-Docs/README.md` | project-level major changes only: goal, scope, phase, key output, judgment, public state, compact version summary |
   | Docs Map (文档地图) | `1-Docs/README.md` + root structure | docs topic index + a VS Code Explorer-style structure tree (root level-1 files/folders and level-2 via `<details>/<summary>`), public-safe names only |
-  | Tasks (任务尝试) | `0-Project/<attempt>/` | one collapsed block per real attempt folder: name, status, recent sync, one-line conclusion; detail stays in the attempt folder |
+  | Tasks (任务尝试) | `0-Project/<attempt>/` | mainline attempts first; parked future attempts and archived/deprecated attempts only in separate collapsed lanes |
   | Materials (数据材料) | `2-Data/DATA.md` | data blocks, publicity, version, quality, usage boundaries |
   | References (参考文献) | `3-Paper_Survey/README.md` | papers, method sources, evidence status, impact; only if there is content |
 
-Board rules: do not invent owners, status, priority, or future phases; do not add a standalone "next step" view (next action lives in the top overview, `_ai/task_plan.md`, or an attempt); use collapsed `<details>` for attempts and the structure tree; keep it a quiet research workbench, not a landing page. The generation rules live in `_ai/project_board_spec.md`. See `references/project-board.md` for the full contract.
+Board rules: do not invent owners, status, priority, or future phases; do not add a standalone "next step" view (next action lives in the top overview, `_ai/task_plan.md`, or an attempt); use collapsed `<details>` for attempts and the structure tree; keep it a quiet research workbench, not a landing page. Future ideas and abandoned attempts must not visually compete with the active path. The generation rules live in `_ai/project_board_spec.md`. See `references/project-board.md` for the full contract.
 
 ## Iteration Loop
 
@@ -110,7 +120,7 @@ Do not sync the board on every edit. Sync when a collaborator would need the new
 
 Each `0-Project/<date>_<slug>/README.md` should answer: what question the attempt tests; what inputs, papers, data notes, or assumptions it uses; what was run or reasoned through (goal, hypothesis, inputs, command, metrics); what failed, changed, or became stable; the conclusion and next action; and whether it affects project status, data notes, literature notes, or the board.
 
-Record failed attempts. A failed path with a clear reason is a useful project asset, and it becomes one collapsed block in the board's Tasks view once it reaches a stable phase or decision point.
+Record failed attempts. A failed path with a clear reason is a useful project asset. If it is abandoned or superseded, mark it archived with the stop reason, replacement if any, last evidence, and what not to repeat; show it in the board only as a secondary collapsed item once it reaches a stable phase or decision point.
 
 ## Data And Literature
 

@@ -57,7 +57,42 @@ Expected behavior:
 
 Status: pass by skill rule inspection.
 
-## Test 4: Board stays a map, not a log
+## Test 4: Park a future project idea
+
+Prompt:
+
+```text
+Use $manage-research-portfolio. I may want a future project on multimodal reasoning, but it is not a current priority and should not enter the main project board yet.
+```
+
+Expected behavior:
+
+- Record the idea in `_PROJECT_PARKING_LOT.md` or a clearly marked parked section.
+- Do not scaffold the full project template unless the user promotes it.
+- Do not count it as an active mainline project.
+- Capture trigger to revisit, possible owner, source/evidence, and promotion condition.
+
+Status: pass by skill rule inspection.
+
+## Test 5: Archive an abandoned attempt
+
+Prompt:
+
+```text
+Use $iterate-research-project. This old prompt-ablation attempt is superseded; keep the record but remove it from the main line.
+```
+
+Expected behavior:
+
+- Preserve the existing attempt folder and evidence.
+- Mark it archived with stop reason, superseded-by/replacement, and what not to repeat.
+- Use `0-Project/_archive/` if moving the attempt; otherwise keep it in place with `Status: archived`.
+- Keep it out of the default active Tasks lane; show it only as collapsed archived work if the board is synced.
+- Update `_ai/progress.md` and `_ai/findings.md` if the stop reason changes project judgment.
+
+Status: pass by skill rule inspection.
+
+## Test 6: Board stays a map, not a log
 
 Prompt:
 

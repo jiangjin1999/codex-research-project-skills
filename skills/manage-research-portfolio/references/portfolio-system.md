@@ -25,7 +25,15 @@ Two root files sit above the areas: `PROJECT_GUIDELINES.md` (global operating ru
 
 ## Project Registry
 
-Keep a portfolio registry in `<slug>-overview/` and mirror a short index in `<slug>-project/README.md`. Use a compact table:
+Keep a portfolio registry in `<slug>-overview/` and mirror a short index in `<slug>-project/README.md`. Separate three lanes so the mainline stays readable:
+
+| Lane | Purpose | Default dashboard behavior |
+| --- | --- | --- |
+| Mainline | active or formally preparing projects | visible in the default Project Board |
+| Parked | future project ideas, possible directions, plans not ready for execution | `_PROJECT_PARKING_LOT.md` or secondary/collapsed note; not counted as active work |
+| Archived | abandoned, deprecated, superseded, or explicitly stopped projects | `_PROJECT_ARCHIVE.md` or `_archive/`; kept for history and reactivation logic |
+
+Use a compact mainline table:
 
 | Field | Meaning |
 | --- | --- |
@@ -40,6 +48,10 @@ Keep a portfolio registry in `<slug>-overview/` and mirror a short index in `<sl
 | Last sync | date of latest meaningful update |
 
 Status must have evidence. Never mark work `done` from memory alone.
+
+Parked future plans need only: idea, why it matters, trigger to revisit, possible owner, source/evidence, and promotion condition. Put them in `<slug>-overview/_PROJECT_PARKING_LOT.md` by default. Do not create a full project folder or dashboard card until the idea has a concrete next action or coordination need.
+
+Archived/deprecated projects need: stop reason, date, superseded-by/replacement if any, last evidence, what not to repeat, and reactivation condition. Record them in `<slug>-overview/_PROJECT_ARCHIVE.md`; if files must move, use `<slug>-project/_archive/<project-name>/`. Keep the folder and evidence; hide it from the default mainline flow unless explicitly reviewing history.
 
 ## Three-File Working Memory
 
@@ -62,11 +74,12 @@ Update as you go: new discovery → `findings.md`; action/validation/failed atte
 When a new project is created, complete all of these together:
 
 1. Confirm operator Git identity; record it in the new project `_ai/progress.md` or a `<slug>-ai` handoff.
-2. Copy `_PROJECT_TEMPLATE` to `<slug>-project/<project-name>/`.
-3. Minimally adapt every template file to the new project; use `TBD` for missing facts.
-4. Copy the project map to the public-safe path `<slug>-overview/public-dashboard/projects/<project-slug>/index.html`.
-5. Add the project card to the dashboard, its server-state defaults, and the allowed public page path; set the card link to `/projects/<project-slug>/`.
-6. Stage explicit paths and commit; never `git add -A`, never commit raw/derived data, logs, pid, cache, or secrets.
+2. Promote from the parked lane only if the idea is ready for mainline execution; otherwise add or update the parked note.
+3. Copy `_PROJECT_TEMPLATE` to `<slug>-project/<project-name>/`.
+4. Minimally adapt every template file to the new project; use `TBD` for missing facts.
+5. Copy the project map to the public-safe path `<slug>-overview/public-dashboard/projects/<project-slug>/index.html`.
+6. Add the project card to the dashboard, its server-state defaults, and the allowed public page path; set the card link to `/projects/<project-slug>/`.
+7. Stage explicit paths and commit; never `git add -A`, never commit raw/derived data, logs, pid, cache, or secrets.
 
 ## Data Safety Records
 

@@ -75,6 +75,20 @@ Keep `_ai/project_board_spec.md` as the durable board contract so any collaborat
 
 This keeps iteration append-only: an accumulating, readable trail of what was tried — instead of one mutable blob.
 
+## Subproject Lanes
+
+Use lanes to keep the active path clear while still preserving non-linear thinking:
+
+| Lane | Purpose | Minimum record |
+| --- | --- | --- |
+| Mainline | current attempts that define the active project path | full attempt README, current status, next action, evidence |
+| Parked | future attempt ideas that are not ready to execute | idea, why it matters, trigger to revisit, possible inputs, promotion condition |
+| Archived | abandoned, deprecated, or superseded attempts | stop reason, last evidence, replacement/superseded-by, what not to repeat |
+
+Parked ideas do not require a full attempt folder. Use `_ai/task_plan.md`, `1-Docs/<date>_future-ideas.md`, or `0-Project/_parking-lot.md` when the idea is still speculative. Create `0-Project/<date>_<name>/` only when the idea has enough shape to need a handoff, criteria, inputs, or later execution.
+
+Archived attempts should not be deleted. Keep their evidence and stop reason so the project does not repeat the same path. Move them to `0-Project/_archive/<attempt-name>/` or keep them in place with `Status: archived`, depending on the project's existing convention.
+
 Use a dated slug:
 
 ```text

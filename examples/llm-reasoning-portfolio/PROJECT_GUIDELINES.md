@@ -8,19 +8,20 @@ _Global operating rules for the whole `reasoning` portfolio. Individual research
 - `reasoning-data` is the global data area: raw/authoritative datasets, inventory, access boundaries, governance. Project-derived data is not written back here.
 - `reasoning-project` is the project area: every formal project has its own folder, copied from `_PROJECT_TEMPLATE`.
 - `reasoning-ai` is the cross-project AI context area: handoffs, global prompts, and context that should survive one conversation.
+- Future project ideas go to `reasoning-overview/_PROJECT_PARKING_LOT.md`; abandoned or deprecated projects go to `reasoning-overview/_PROJECT_ARCHIVE.md` or `reasoning-project/_archive/`. They are preserved but do not enter the default active dashboard flow.
 - After anyone creates or advances a project, synchronize `reasoning-overview/PROJECT_DASHBOARD.html`.
 - Creating a formal project also initializes its project map HTML, published copy, dashboard card, and project-page link.
 
 ## 2. New project rules
 
-Create formal projects under `reasoning-project/<project-name>/` by copying `_PROJECT_TEMPLATE`. Before creating, state: project name, question, likely data, expected deliverable, owner or temporary contact, initial priority, whether it touches any private data, and the operator's Git identity. Existing projects need not migrate immediately.
+Create formal projects under `reasoning-project/<project-name>/` by copying `_PROJECT_TEMPLATE`. Before creating, state: project name, question, likely data, expected deliverable, owner or temporary contact, initial priority, whether it touches any private data, and the operator's Git identity. If the idea is not ready, park it in `_PROJECT_PARKING_LOT.md` instead of scaffolding. Existing projects need not migrate immediately.
 
 ## 3. Work locations
 
 - Project root `PROJECT_GUIDELINES.md`: this project's sync rules, customization boundaries, HTML classification.
 - Project root `PROJECT_BOARD.html`: this project's current state; kept in sync with its docs and `_ai`.
 - Goal/scope/owner/status/next/milestones: project `_ai/project_overview.md`. Board generation rules: project `_ai/project_board_spec.md`.
-- `0-Project/`: concrete attempts, experiment routes, analysis branches only — not overview, board rules, or long-term guidelines.
+- `0-Project/`: concrete attempts, experiment routes, analysis branches only — not overview, board rules, or long-term guidelines. Use `0-Project/_parking-lot.md` for future attempt ideas and `0-Project/_archive/` for abandoned/superseded attempts.
 - Design, meetings, methods, comparisons, external summaries: project `1-Docs/`, with `1-Docs/README.md` as the fixed index.
 - Data notes/permissions/versions/QC/boundaries: project `2-Data/DATA.md`. Project-derived data stays in the project's `2-Data/`, never written back to global `reasoning-data`.
 - Literature and evidence: project `3-Paper_Survey/`.

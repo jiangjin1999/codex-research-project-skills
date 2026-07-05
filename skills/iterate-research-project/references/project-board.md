@@ -49,7 +49,7 @@ Compact top nav or a narrow left nav, with a persistent top snapshot and mutuall
 | Top snapshot | name, one-sentence description, status, owner, recent sync, current focus, one short progress line | phase lists, long plans, attempt lists, methodology |
 | Progress | project-level major changes: goal, scope, phase, key output, judgment, public state | daily commands, tiny discoveries, raw logs |
 | Docs Map | `1-Docs` topic index + first/second-level structure tree with `<details>/<summary>` | full deep tree, private filenames, absolute paths |
-| Attempts | one collapsed block per real `0-Project/<attempt>/` folder | attempts with no folder, messy transcripts |
+| Attempts | mainline attempt blocks first; parked and archived attempts in separate collapsed lanes | mixing every idea into the active path, attempts with no record, messy transcripts |
 | Data | source, version, access class, QC, allowed use, public/private boundary | row-level examples, private samples, unapproved paths |
 | References | papers, external sources, method references, evidence status, project impact | vague inspirations without evidence |
 
@@ -75,6 +75,14 @@ Do not create a standalone "next step" view. A next step belongs in the top snap
 1. update the attempt's own README first;
 2. update `_ai/progress.md`, `_ai/findings.md`, or `_ai/task_plan.md` as needed;
 3. sync the collapsed attempt block in the board if Sync Scale Level 2 is reached.
+
+Keep three lanes:
+
+- **Mainline:** active attempts, shown first.
+- **Parked:** future attempt ideas, shown only if concrete enough to have a record; otherwise leave them in `_ai/task_plan.md` or `0-Project/_parking-lot.md`.
+- **Archived:** abandoned/deprecated/superseded attempts, shown collapsed with stop reason and replacement if any. Use `0-Project/_archive/` when moving archived attempt folders.
+
+The board should make the active path obvious. Parked and archived lanes are for recall and audit, not for driving today's work.
 
 ## 8. Public-safe copy
 
