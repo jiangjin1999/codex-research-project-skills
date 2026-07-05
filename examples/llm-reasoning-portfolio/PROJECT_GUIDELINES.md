@@ -21,8 +21,8 @@ Create formal projects under `reasoning-project/<project-name>/` by copying `_PR
 - Project root `PROJECT_GUIDELINES.md`: this project's sync rules, customization boundaries, HTML classification.
 - Project root `PROJECT_BOARD.html`: this project's current state; kept in sync with its docs and `_ai`.
 - Goal/scope/owner/status/next/milestones: project `_ai/project_overview.md`. Board generation rules: project `_ai/project_board_spec.md`.
-- `0-Project/`: concrete attempts, experiment routes, analysis branches only — not overview, board rules, or long-term guidelines. Use `0-Project/_parking-lot.md` for future attempt ideas and `0-Project/_archive/` for abandoned/superseded attempts.
-- Design, meetings, methods, comparisons, external summaries: project `1-Docs/`, with `1-Docs/README.md` as the fixed index.
+- `0-Project/`: concrete attempts, experiment routes, analysis branches only — not overview, board rules, or long-term guidelines. Use `0-Project/_parking-lot.md` for future attempt ideas, `0-Project/_archive/` for abandoned/superseded attempts, and `0-Project/<attempt>/docs/` for notes that only make sense inside one attempt.
+- Design, meetings, methods, comparisons, external summaries, and discussion that is not an experiment: project `1-Docs/`, with `1-Docs/README.md` as the fixed index.
 - Data notes/permissions/versions/QC/boundaries: project `2-Data/DATA.md`. Project-derived data stays in the project's `2-Data/`, never written back to global `reasoning-data`.
 - Literature and evidence: project `3-Paper_Survey/`.
 - Project-local prompts/procedures/skills: project `4-Skills/PROJECT_SKILLS.md`.
@@ -58,6 +58,8 @@ Collect feedback via the dashboard: related project, suggestion, reason, evidenc
 - Read the smallest necessary context first; when editing a project, work from that project root.
 - Before creating or modifying a project, confirm the operator's Git identity (`git config user.name`, `git config user.email`); if missing, ask the user to configure their own and pause.
 - Prefer concrete module language ("this is a document", "this is a small attempt for `0-Project`", "this is data information for `2-Data`", "this is project status") so AI places content in the narrowest home.
+- Route discussion vs attempts strictly: discussion/decision/method note → `1-Docs/<date>_<topic>.md`; concrete small attempt → `0-Project/<date>_<name>/`; attempt-level note → `0-Project/<attempt>/docs/<date>_<topic>.md`.
+- Before context gets long, after a small step completes, or before switching projects/subprojects, write a compact handoff in the narrowest matching Markdown file. Include current goal, completed step, key decisions, evidence paths, open questions, next action, and whether board/dashboard sync is needed.
 - For high-impact requests (portfolio-wide rules, data norms, raw-data write locations, public/permission boundaries, cross-project defaults), restate understanding and confirm before acting.
 - Do not make broad cross-project edits by default. State affected files before automatic structure changes.
 - Keep process records in project `_ai/`: plan → `task_plan.md`, discoveries → `findings.md`, actions/validation → `progress.md`.

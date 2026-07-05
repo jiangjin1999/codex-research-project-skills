@@ -70,9 +70,11 @@ Modular collaboration language — encourage the user to name the module type in
 
 - "This is a document" → one topic/meeting/method/decision; project `1-Docs/` + update `1-Docs/README.md`.
 - "This is a small project / attempt" → one concrete experiment or route; project `0-Project/<attempt-name>/`.
+- "This is a note about an existing attempt" → project `0-Project/<attempt>/docs/<date>_<topic>.md`; use the `iterate-research-project` skill.
 - "This is a future project idea" → parked lane first; do not scaffold or dashboard it until promoted.
 - "This project is deprecated / abandoned" → archived lane with stop reason, replacement if any, evidence, and reactivation condition.
 - "This is data information" → source/version/permissions/QC/boundary; project `2-Data/DATA.md`.
+- "This is context to survive compression or task switching" → write the narrowest handoff: project `_ai`/`1-Docs`/attempt `docs/`, or `<slug>-ai/<date>_<topic>.md` for portfolio-wide context.
 - If unsure, classify first, explain the landing place, then edit.
 
 See `references/portfolio-system.md` for the full folder-and-record contract, registry fields, working memory, and new-project initialization.
@@ -134,6 +136,7 @@ Keep parked and archived work separate:
 - Ask when missing information affects owner, public boundary, project status, next action, data safety, or whether to sync the dashboard.
 - Ask before turning any decision into a portfolio-wide or cross-project rule; confirm scope, exceptions, and which rule files to update.
 - For low-risk formatting/naming/classification, choose the conservative option and record the assumption in `progress.md`.
+- Before context gets long, after a meaningful step, or before switching projects, write a compact handoff in the narrowest matching Markdown file. Include current goal, completed step, key decisions, evidence paths, open questions, next action, and whether dashboard/board sync is needed.
 - Keep questions short and concrete, preferably 2-3 options.
 
 ## Publishing

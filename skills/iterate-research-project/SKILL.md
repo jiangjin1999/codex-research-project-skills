@@ -1,6 +1,6 @@
 ---
 name: iterate-research-project
-description: Iterate one research project with evidence and keep its PROJECT_BOARD.html board in sync. Works standalone for a single project, or inside a portfolio managed by manage-research-portfolio. Use when Codex needs to classify and place project material into attempts, docs, data notes, literature, project-local skills, or AI working memory; set up or maintain the folders 0-Project, 1-Docs, 2-Data, 3-Paper_Survey, 4-Skills, and _ai; write the entry files README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md and the PROJECT_BOARD.html board; keep the _ai working memory (project_overview, project_board_spec, task_plan, findings, progress); track repeated attempts, failed paths, provenance, QC, paper evidence, decisions, status, next actions; and follow the markdown-first then board Sync Scale inside a single project.
+description: Iterate one research project with evidence and keep its PROJECT_BOARD.html board in sync. Works standalone for a single project, or inside a portfolio managed by manage-research-portfolio. Use when Codex needs to classify and place project material into attempts, docs, data notes, literature, project-local skills, or AI working memory; set up or maintain the folders 0-Project, 1-Docs, 2-Data, 3-Paper_Survey, 4-Skills, and _ai; write the entry files README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md and the PROJECT_BOARD.html board; keep the _ai working memory (project_overview, project_board_spec, task_plan, findings, progress); route discussions to docs and concrete experiments to subprojects; write compact handoff notes before context compression or task switching; track repeated attempts, failed paths, provenance, QC, paper evidence, decisions, status, next actions; and follow the markdown-first then board Sync Scale inside a single project.
 ---
 
 # Iterate Research Project
@@ -22,6 +22,8 @@ Subprojects also have lanes:
 
 Park cheaply. A future idea can be a short entry in `_ai/task_plan.md`, `1-Docs/`, or `0-Project/_parking-lot.md`; create a full attempt folder only when the idea has enough inputs, criteria, or handoff value.
 
+Route discussion and attempts separately: discussion, decision, comparison, and method explanation go to `1-Docs/<date>_<topic>.md`; concrete trials with inputs, criteria, outputs, or results go to `0-Project/<date>_<slug>/`; attempt-local discussion goes to `0-Project/<attempt>/docs/<date>_<topic>.md`.
+
 **Standalone or inside a portfolio.** This skill is self-contained: use it on its own for a single project at any path — no portfolio required. Everything the project needs (folders, entry files, board, working memory, git policy) lives inside the project folder. *Optionally*, when the project sits inside a portfolio (`<slug>-project/<project>/`), sync status, owner, priority, and public state up to the portfolio dashboard with the `manage-research-portfolio` skill. When you run standalone, skip every "portfolio dashboard" and "registry" step in this skill — they are optional integrations, never prerequisites.
 
 ## Project Contract
@@ -36,7 +38,7 @@ Use this structure unless the project already has equivalent names. It is the co
 ├── GIT_WORKFLOW.md        git identity + per-change commit policy for this project
 ├── scripts/
 │   └── init_project_git.sh   optional helper to set identity and first commit
-├── 0-Project/             concrete attempts / experiments (created on the first attempt; the empty template ships without it — one 0-Project/<date>_<slug>/ per attempt)
+├── 0-Project/             concrete attempts / experiments (one 0-Project/<date>_<slug>/ per attempt)
 ├── 1-Docs/
 │   └── README.md          the single fixed Docs entry + topic index
 ├── 2-Data/
@@ -61,10 +63,11 @@ When the user gives new material, choose one landing place, then decide whether 
 
 | User intent | Landing place | Board view it may touch |
 | --- | --- | --- |
-| "This is a concrete experiment / attempt" | `0-Project/<date>_<slug>/` | Tasks (任务尝试) |
+| "This is a discussion / method / decision / comparison" | `1-Docs/<date>_<topic>.md` + update `1-Docs/README.md` | Docs Map (文档地图) |
+| "This is a concrete experiment / attempt" | `0-Project/<date>_<slug>/`; put attempt-local notes under its `docs/` | Tasks (任务尝试) |
+| "This is a note about one existing attempt" | `0-Project/<attempt>/docs/<date>_<topic>.md` | usually Tasks, sometimes Docs Map if it changes the project-level index |
 | "This is a future attempt idea" | `_ai/task_plan.md`, `1-Docs/`, or `0-Project/_parking-lot.md`; full attempt folder only if concrete | usually none, or a parked Tasks lane |
 | "This attempt is abandoned / superseded" | keep the attempt folder or move it under `0-Project/_archive/`; mark archived with stop reason, evidence, and replacement | archived/collapsed Tasks lane |
-| "This is a method note / meeting / decision / comparison" | `1-Docs/<date>_<topic>.md` + update `1-Docs/README.md` | Docs Map (文档地图) |
 | "This is data / benchmark information" | `2-Data/DATA.md` | Materials (数据材料) |
 | "This is a paper / external source / evidence" | `3-Paper_Survey/README.md` + evidence matrix | References (参考文献) |
 | "This is a reusable workflow / prompt / AI rule" | `4-Skills/PROJECT_SKILLS.md` | (usually none) |
@@ -101,7 +104,23 @@ Board rules: do not invent owners, status, priority, or future phases; do not ad
 4. Create or update the narrowest source file first.
 5. Record findings that change direction in `_ai/findings.md`; record actions, validation, and failed paths in `_ai/progress.md`.
 6. Update `_ai/task_plan.md` when phase, blocker, or next action changes.
-7. Apply the Sync Scale to decide whether to touch `PROJECT_BOARD.html`, then commit the changed safe files with explicit paths.
+7. Before context compression, after completing a small step, or before switching topic/subproject, write a compact handoff in the narrowest matching Markdown file.
+8. Apply the Sync Scale to decide whether to touch `PROJECT_BOARD.html`, then commit the changed safe files with explicit paths.
+
+## Context Compression And Handoff Hygiene
+
+Proactively write context down before the conversation becomes expensive to carry. Do this when the context window is getting large, a small step finishes, a subproject reaches a decision point, or the next action will switch to another topic, project, or attempt.
+
+Choose the narrowest home:
+
+| Situation | Handoff location |
+| --- | --- |
+| Project-level discussion, decision, or method note | `1-Docs/<date>_<topic>.md` |
+| Attempt-level step, observation, or local discussion | `0-Project/<attempt>/docs/<date>_<topic>.md` |
+| Project status, blocker, next action, or validation summary | `_ai/progress.md`, `_ai/findings.md`, `_ai/task_plan.md` |
+| Cross-project or portfolio context | the portfolio's `<slug>-ai/<date>_<topic>.md` if a portfolio exists |
+
+Minimum handoff fields: current goal, completed step, key decisions, evidence paths, unresolved questions, next action, and whether board sync is needed. Keep this compact; do not paste full transcripts or raw logs.
 
 ## Sync Scale
 
@@ -114,11 +133,13 @@ Judge every change against this scale before editing the board.
 | 2 | New artifact/path/QC result, blocker, next action, status, docs map, structure tree, data boundary, reference, or attempt changed | Source markdown or `_ai`, then sync `PROJECT_BOARD.html` |
 | 3 | Phase, milestone, public claim, owner, priority, or public state changed | Source markdown, board, `PROJECT_GUIDELINES.md`, and — only if the project belongs to a portfolio — the portfolio dashboard |
 
+Context handoff notes are usually Level 1. Raise them to Level 2 only when they change next action, status, blocker, docs map, data boundary, reference state, or attempt state.
+
 Do not sync the board on every edit. Sync when a collaborator would need the new state.
 
 ## Subproject Records
 
-Each `0-Project/<date>_<slug>/README.md` should answer: what question the attempt tests; what inputs, papers, data notes, or assumptions it uses; what was run or reasoned through (goal, hypothesis, inputs, command, metrics); what failed, changed, or became stable; the conclusion and next action; and whether it affects project status, data notes, literature notes, or the board.
+Each `0-Project/<date>_<slug>/README.md` should answer: what question the attempt tests; what inputs, papers, data notes, or assumptions it uses; what was run or reasoned through (goal, hypothesis, inputs, command, metrics); what failed, changed, or became stable; the conclusion and next action; and whether it affects project status, data notes, literature notes, or the board. Put attempt-local discussions, step handoffs, and design notes in that attempt's `docs/` folder.
 
 Record failed attempts. A failed path with a clear reason is a useful project asset. If it is abandoned or superseded, mark it archived with the stop reason, replacement if any, last evidence, and what not to repeat; show it in the board only as a secondary collapsed item once it reaches a stable phase or decision point.
 

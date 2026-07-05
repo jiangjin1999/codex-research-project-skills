@@ -87,4 +87,6 @@ For any project or dataset, record: source and location; public/private sensitiv
 
 ## Cross-Project Handoff
 
-Use `<slug>-ai/<date>_<topic>.md` for context that should survive a thread: current portfolio state in a few bullets, changed sources of truth, open decisions and who should decide, stale assumptions to re-check, and the next recommended action. Keep command logs in project-local `progress.md`, not in handoffs.
+Use `<slug>-ai/<date>_<topic>.md` for portfolio-level context that should survive a thread, context compression, or a switch to another project: current portfolio state in a few bullets, changed sources of truth, open decisions and who should decide, stale assumptions to re-check, and the next recommended action. Keep command logs in project-local `progress.md`, not in handoffs.
+
+If the context belongs to one project, use the project-local rule instead: project discussion goes to `1-Docs/<date>_<topic>.md`, attempt-level notes go to `0-Project/<attempt>/docs/<date>_<topic>.md`, and status/next/action continuity goes to project `_ai/`.

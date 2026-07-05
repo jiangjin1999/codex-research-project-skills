@@ -109,6 +109,40 @@ Expected behavior:
 
 Status: pass by skill rule inspection.
 
+## Test 7: Route discussion to docs, not a subproject
+
+Prompt:
+
+```text
+Use $iterate-research-project. Let's discuss whether exact-match is enough for the GSM8K evaluation, but do not run anything yet.
+```
+
+Expected behavior:
+
+- Classify this as discussion/method/decision work, not a concrete attempt.
+- Create or update `1-Docs/<date>_gsm8k-evaluation.md` and `1-Docs/README.md`.
+- Do not create a new `0-Project/<date>_<name>/` folder unless the user turns the discussion into a concrete experiment.
+- If the discussion changes project next action, blocker, or evaluation criteria, update `_ai/task_plan.md` or `_ai/findings.md` and sync the board per the Sync Scale.
+
+Status: pass by skill rule inspection.
+
+## Test 8: Write a compact handoff after a small attempt step
+
+Prompt:
+
+```text
+Use $iterate-research-project. I finished freezing the metric inside the cot-vs-self-consistency attempt; record it and prepare for the next step.
+```
+
+Expected behavior:
+
+- Record the step in `0-Project/<attempt>/docs/<date>_<topic>.md` or the attempt README/TASK_BOARD if that is the narrowest current file.
+- Include current goal, completed step, key decision, evidence path, unresolved questions, next action, and whether board sync is needed.
+- Update `_ai/progress.md` and `_ai/task_plan.md` if next action changed.
+- Sync `PROJECT_BOARD.html` only if next/status/blocker/docs map/attempt state changed; otherwise keep it as Level 1 Markdown/_ai.
+
+Status: pass by skill rule inspection.
+
 ## Structural parity check
 
 `examples/llm-reasoning-portfolio/` is built to the exact structure both skills describe. To re-verify after edits:

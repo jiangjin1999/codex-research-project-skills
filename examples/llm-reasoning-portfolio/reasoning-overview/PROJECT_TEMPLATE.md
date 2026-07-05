@@ -13,8 +13,8 @@ Every formal project under `reasoning-project/` is a copy of `_PROJECT_TEMPLATE/
 
 ## Folders
 
-- `0-Project/` — concrete attempts and experiment routes. Each attempt is a dated subfolder (e.g. `2026-07-04_first-attempt/`) holding its own `data/ docs/ outputs/ reports/ scripts/` and a `TASK_BOARD.md`. Attempts are append-only history.
-- `1-Docs/` — design, methods, comparisons, external summaries. `1-Docs/README.md` is the fixed index.
+- `0-Project/` — concrete attempts and experiment routes. Each attempt is a dated subfolder (e.g. `2026-07-04_first-attempt/`) holding its own `data/ docs/ outputs/ reports/ scripts/` and a `TASK_BOARD.md`; attempt-level discussions and step handoffs live in that attempt's `docs/`. Attempts are append-only history.
+- `1-Docs/` — project-level discussions, design, methods, comparisons, external summaries. `1-Docs/README.md` is the fixed index.
 - `2-Data/` — data notes only: `2-Data/DATA.md` records source, version, method, QC, and boundary. Derived data lives here, never written back to global `reasoning-data`.
 - `3-Paper_Survey/` — literature and evidence; each entry records the claim, the evidence, and its effect on this project's decisions.
 - `4-Skills/` — project-local prompts, procedures, and skills in `4-Skills/PROJECT_SKILLS.md`.

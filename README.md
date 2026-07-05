@@ -47,10 +47,13 @@ This is the heart of the system, and it works **with or without a portfolio** �
 | Kind of work | Home | Note |
 | --- | --- | --- |
 | **Experiment attempts** — *the core* | `0-Project/<date>_<name>/` | each concrete thing you try = one **subproject** |
+| Discussion / decisions / methods | `1-Docs/<date>_<topic>.md` | durable thinking that is not itself an experiment |
 | Data | `2-Data/DATA.md` | source, version, permission, QC, derived-data boundary |
 | Paper survey | `3-Paper_Survey/` | evidence and how it changes your decisions |
 | Skills / local workflows | `4-Skills/` | reusable prompts, commands, procedures |
 | AI records | `_ai/` | working memory: overview, board spec, plan, findings, progress |
+
+Use the distinction strictly: if you are discussing, comparing, deciding, or explaining a method, write a docs note. If you are trying something with inputs, criteria, outputs, or a result, make or update a subproject. If the discussion belongs inside one attempt, write it under `0-Project/<attempt>/docs/<date>_<topic>.md`.
 
 Treat **experiment attempts as subprojects**, and be generous about creating them:
 
@@ -75,6 +78,7 @@ The HTML board is the best medium for short-horizon human + agent work: one alwa
 A few habits that make the above pay off:
 
 - **Follow the Sync Scale.** Decide each change's blast radius (L0 no HTML → L1 Markdown/`_ai` → L2 this board → L3 the portfolio dashboard) and update only what that level needs — trustworthy boards, no busywork.
+- **Compress context into files before it gets expensive.** When a conversation is getting long, a small step is complete, or you are about to switch topic/subproject, write a compact handoff in the narrowest matching Markdown file before continuing.
 - **Status must be evidence-backed.** "Working" means a run, number, or paper you can point to in the matching folder — not a feeling.
 - **Separate remembered ideas from active work.** Future plans are useful, but they should be parked until they have an owner, decision point, or concrete next action. Deprecated work should keep its stop reason and evidence, then leave the default flow.
 - **Give data a boundary before you touch it.** Record source, version, permission, and what may be derived or shared; never let raw sensitive data reach a board or handoff.
@@ -148,9 +152,11 @@ Project: [[one-sentence goal]]
 
 Set it up and keep it honest as it evolves:
 1. Scaffold the structure: README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md, PROJECT_BOARD.html,
-   and folders 1-Docs/ 2-Data/ 3-Paper_Survey/ 4-Skills/ _ai/. Create 0-Project/ on the first attempt.
+   and folders 0-Project/ 1-Docs/ 2-Data/ 3-Paper_Survey/ 4-Skills/ _ai/.
 2. Classify before writing — put each thing in exactly one place:
-   experiment attempt -> 0-Project/<YYYY-MM-DD>_<name>/ ; method/decision -> 1-Docs/ ;
+   discussion/method/decision -> 1-Docs/<YYYY-MM-DD>_<topic>.md ;
+   concrete experiment attempt -> 0-Project/<YYYY-MM-DD>_<name>/ ;
+   attempt-level note -> 0-Project/<attempt>/docs/<YYYY-MM-DD>_<topic>.md ;
    data -> 2-Data/DATA.md ; paper/evidence -> 3-Paper_Survey/ ; reusable prompt/procedure -> 4-Skills/ ;
    status/next/plan -> _ai/ working memory.
 3. Iterate by SUBPROJECT: every new idea = a new 0-Project/<date>_<name>/ attempt. Don't overwrite or
@@ -161,7 +167,10 @@ Set it up and keep it honest as it evolves:
 5. Markdown first, board second: update the source .md / _ai note, THEN sync PROJECT_BOARD.html
    (5 views: Progress, Docs, Tasks/attempts, Materials/data, References). The board is a map, not a log —
    no raw logs, private data, or absolute paths. Back link is optional when standalone.
-6. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
+6. Before context gets long, after a small step finishes, or before switching topic/subproject, write a compact
+   handoff in the narrowest matching Markdown file. Include current goal, completed step, key decisions,
+   evidence paths, open questions, next action, and whether board sync is needed.
+7. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
    logs, caches, or secrets.
 
 Confirm the plan, then create the structure and the board.
@@ -185,8 +194,8 @@ Do this:
    with priority/owner/status/next + link to that project's own board; template card pinned first),
    Data Board, and Usage Guidelines. Keep a sanitized public-dashboard/ copy for anything published.
 3. In <slug>-project/, add a copyable _PROJECT_TEMPLATE and scaffold each first project from it using
-   iterate-research-project (README, PROJECT_GUIDELINES, PROJECT_BOARD.html, 1-Docs/ 2-Data/
-   3-Paper_Survey/ 4-Skills/ _ai/; 0-Project/ appears on the first attempt).
+   iterate-research-project (README, PROJECT_GUIDELINES, PROJECT_BOARD.html, 0-Project/ 1-Docs/
+   2-Data/ 3-Paper_Survey/ 4-Skills/ _ai/).
 4. Keep the whole thing in sync by the Sync Scale: L0 none -> L1 markdown/_ai only -> L2 this project's
    board -> L3 the portfolio dashboard/registry. A project can be started from any path and then
    registered + synced up automatically.

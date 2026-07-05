@@ -12,9 +12,10 @@ Use this reference when turning one research idea into a durable, iterating proj
 ├── GIT_WORKFLOW.md        git identity + per-change commit policy for this project
 ├── scripts/
 │   └── init_project_git.sh   optional helper to set git identity and make the first commit
-├── 0-Project/                 created on the first attempt (the empty template ships without it)
+├── 0-Project/                 concrete attempts and experiment branches
 │   ├── README.md
 │   └── <date>_<attempt-name>/   one folder per concrete attempt
+│       └── docs/                attempt-local notes and step handoffs
 ├── 1-Docs/
 │   └── README.md
 ├── 2-Data/
@@ -38,8 +39,8 @@ Create less if the project is still small, but keep the responsibilities separat
 
 | Folder | Role | Typical files |
 | --- | --- | --- |
-| `0-Project/` | Concrete attempts and experiment branches | dated attempt folders, experiment records, ablations, demos |
-| `1-Docs/` | Methods and durable notes | method notes, decisions, comparisons, retrospectives |
+| `0-Project/` | Concrete attempts and experiment branches | dated attempt folders, attempt-local `docs/`, experiment records, ablations, demos |
+| `1-Docs/` | Methods and durable notes | project-level discussions, method notes, decisions, comparisons, retrospectives |
 | `2-Data/` | Data notes and project-derived artifacts | `DATA.md`, data cards, provenance, schema, QC, derived-output notes |
 | `3-Paper_Survey/` | Evidence and method sources | paper notes, evidence matrix, method comparisons, citations |
 | `4-Skills/` | Project-local AI collaboration | `PROJECT_SKILLS.md`, prompts, AI rules, checklists, reusable procedures |
@@ -63,6 +64,19 @@ Create less if the project is still small, but keep the responsibilities separat
 | `_ai/progress.md` | Actions, validation, failed attempts, sync log, commit made |
 
 Keep `_ai/project_board_spec.md` as the durable board contract so any collaborator can regenerate the board consistently. Update these when the project changes; do not use them as a dump for full transcripts.
+
+## Docs Vs Subprojects
+
+Classify the work before writing:
+
+| Work type | Location | Rule |
+| --- | --- | --- |
+| Discussion, method explanation, comparison, meeting note, or decision | `1-Docs/<date>_<topic>.md` | Use when the record is durable thinking, not an executable attempt |
+| Concrete small attempt with inputs, criteria, outputs, or result | `0-Project/<date>_<attempt-name>/` | Use when the record needs its own run context or future continuation point |
+| Note about one existing attempt | `0-Project/<attempt>/docs/<date>_<topic>.md` | Use when the discussion only makes sense inside that attempt |
+| Status, next action, blocker, validation, or recovery note | `_ai/{task_plan,findings,progress}.md` | Use for working memory and task continuity |
+
+If in doubt, ask whether the content is "thinking about the project" or "trying something in the project." Thinking goes to `1-Docs/`; trying goes to `0-Project/`.
 
 ## Subproject Discipline
 
@@ -114,6 +128,21 @@ Each attempt record should carry at least:
 - `Failed paths` — what did not work and why;
 - `Conclusion` — does it support the hypothesis, and how it affects project judgment;
 - `Next` — the next action.
+
+Keep attempt-level discussions and step handoffs under `0-Project/<attempt>/docs/`. This keeps the subproject self-contained without polluting the project-level docs index.
+
+## Context Compression And Handoff Hygiene
+
+Write a compact handoff before the context window becomes expensive, after a small step completes, before switching topics/subprojects, or when a future collaborator would otherwise need the chat history.
+
+Choose the narrowest Markdown home:
+
+- project-level discussion or decision: `1-Docs/<date>_<topic>.md`;
+- attempt-level note: `0-Project/<attempt>/docs/<date>_<topic>.md`;
+- project working memory: `_ai/progress.md`, `_ai/findings.md`, or `_ai/task_plan.md`;
+- portfolio-level handoff: `<slug>-ai/<date>_<topic>.md` when this project belongs to a portfolio.
+
+Each handoff should include: current goal, completed step, key decisions, evidence paths, unresolved questions, next action, and whether board sync is needed. The handoff is normally Level 1; raise it to Level 2 only if it changes next action, status, blocker, docs map, data boundary, reference state, or attempt state.
 
 ## Sync Checklist
 
