@@ -79,6 +79,7 @@ A few habits that make the above pay off:
 
 - **Follow the Sync Scale.** Decide each change's blast radius (L0 no HTML → L1 Markdown/`_ai` → L2 this board → L3 the portfolio dashboard) and update only what that level needs — trustworthy boards, no busywork.
 - **Compress context into files before it gets expensive.** When a conversation is getting long, a small step is complete, or you are about to switch topic/subproject, write a compact handoff in the narrowest matching Markdown file before continuing.
+- **Treat challenges as first-class records.** When you discover drift, stale public pages, data-provenance gaps, local-rule divergence, or an oversized dirty worktree, record the challenge before fixing it: type, evidence path, owner, next action, and sync level.
 - **Status must be evidence-backed.** "Working" means a run, number, or paper you can point to in the matching folder — not a feeling.
 - **Separate remembered ideas from active work.** Future plans are useful, but they should be parked until they have an owner, decision point, or concrete next action. Deprecated work should keep its stop reason and evidence, then leave the default flow.
 - **Give data a boundary before you touch it.** Record source, version, permission, and what may be derived or shared; never let raw sensitive data reach a board or handoff.
@@ -94,6 +95,16 @@ Both skills treat a lightweight HTML **board** as the shared, current-state map 
 - **Project board** — `<slug>-project/<project>/PROJECT_BOARD.html`: a persistent **Back to dashboard** link (to site root `/`), a version status, an always-visible project overview, and five views — **Progress**, **Docs** (a structure tree), **Tasks** (dated attempts, collapsed), **Materials** (data notes), and **References** (evidence). Every project copies the same board shell, so all project boards are structurally identical.
 
 The board is a **map, not a log**: update Markdown and `_ai/` first, then sync the board. Each board view maps to a folder, so a reader can move between the board and the files without surprise. A **Sync Scale** (L0 no HTML change → L1 Markdown/`_ai` only → L2 this project's board → L3 the portfolio dashboard) says when a change must reach the board, the registry, and handoffs. Parked and archived work should be visible only as a separate collapsed/secondary lane, not mixed into the active default view.
+
+## Challenge Triage
+
+As portfolios grow, the main challenge is often not one failed experiment; it is drift between source files, boards, data notes, public copies, local rules, and handoffs. Handle that explicitly:
+
+- **Portfolio-level challenge** → record it in `<slug>-overview/_CHALLENGE_REGISTER.md` or `<slug>-ai/<date>_challenge-review.md`.
+- **Project-level challenge** → record it in `1-Docs/<date>_challenge-review.md` or `_ai/findings.md`, then update `_ai/task_plan.md` with the next action.
+- **Concrete repair attempt** → create `0-Project/<date>_repair-<slug>/` only when there is an executable fix or audit run.
+
+Challenge records should capture: challenge type, evidence path, blast radius, owner/TBD, next action, safety boundary, and whether board/dashboard sync is required. Do not repair every drift in one broad edit.
 
 ## Install
 
@@ -164,13 +175,15 @@ Set it up and keep it honest as it evolves:
 4. Separate lanes: active attempts stay in the mainline; future ideas go to `0-Project/_parking-lot.md`
    or a parked attempt folder; abandoned/superseded attempts go to `0-Project/_archive/` or stay
    marked archived with a stop reason and evidence.
-5. Markdown first, board second: update the source .md / _ai note, THEN sync PROJECT_BOARD.html
+5. Treat challenges explicitly: if you find stale docs, board drift, data-provenance gaps, local-rule drift,
+   or a messy worktree, write a challenge review first; create a repair subproject only for a concrete fix.
+6. Markdown first, board second: update the source .md / _ai note, THEN sync PROJECT_BOARD.html
    (5 views: Progress, Docs, Tasks/attempts, Materials/data, References). The board is a map, not a log —
    no raw logs, private data, or absolute paths. Back link is optional when standalone.
-6. Before context gets long, after a small step finishes, or before switching topic/subproject, write a compact
+7. Before context gets long, after a small step finishes, or before switching topic/subproject, write a compact
    handoff in the narrowest matching Markdown file. Include current goal, completed step, key decisions,
    evidence paths, open questions, next action, and whether board sync is needed.
-7. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
+8. Use my own git identity; stage explicit paths (never git add -A); never commit raw/derived data,
    logs, caches, or secrets.
 
 Confirm the plan, then create the structure and the board.
@@ -202,7 +215,10 @@ Do this:
 5. Keep active work separate from remembered work: mainline projects appear on the default dashboard;
    parked future plans live in `_PROJECT_PARKING_LOT.md`; archived/deprecated projects live in
    `_PROJECT_ARCHIVE.md` or `_archive/` until promoted or explicitly reviewed.
-6. Public-safe only: no raw sensitive data, credentials, identity-bearing records, or absolute paths in
+6. Keep a challenge register for drift and operational debt: stale public copies, registry/dashboard mismatch,
+   data-provenance gaps, local-rule drift, oversized dirty worktrees, and orphaned handoffs. Record type,
+   evidence, owner/TBD, next action, and sync level before fixing.
+7. Public-safe only: no raw sensitive data, credentials, identity-bearing records, or absolute paths in
    any .md, HTML, public dashboard, or handoff. Use my own git identity; stage explicit paths.
 
 Confirm the plan, then create the portfolio, the dashboard, and the first project skeletons.
@@ -228,7 +244,7 @@ Then open:
 - `http://localhost:8137/reasoning-project/reasoning-baselines/PROJECT_BOARD.html` — a project's own five-view board.
 - `http://localhost:8137/reasoning-overview/public-dashboard/` — the sanitized public copy (or run its own `serve.sh`).
 
-Layout: `reasoning-overview/` (dashboard, requirements log, template, `_PROJECT_PARKING_LOT.md`, `_PROJECT_ARCHIVE.md`, public copy), `reasoning-project/` (registry + `_PROJECT_TEMPLATE` + three projects), `reasoning-data/` (shared data catalog), `reasoning-ai/` (cross-project handoff). It uses public papers and benchmarks only:
+Layout: `reasoning-overview/` (dashboard, requirements log, template, `_PROJECT_PARKING_LOT.md`, `_PROJECT_ARCHIVE.md`, `_CHALLENGE_REGISTER.md`, public copy), `reasoning-project/` (registry + `_PROJECT_TEMPLATE` + three projects), `reasoning-data/` (shared data catalog), `reasoning-ai/` (cross-project handoff). It uses public papers and benchmarks only:
 
 - Chain-of-Thought Prompting: https://arxiv.org/abs/2201.11903
 - Self-Consistency: https://arxiv.org/abs/2203.11171

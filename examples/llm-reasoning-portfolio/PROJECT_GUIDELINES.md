@@ -9,6 +9,7 @@ _Global operating rules for the whole `reasoning` portfolio. Individual research
 - `reasoning-project` is the project area: every formal project has its own folder, copied from `_PROJECT_TEMPLATE`.
 - `reasoning-ai` is the cross-project AI context area: handoffs, global prompts, and context that should survive one conversation.
 - Future project ideas go to `reasoning-overview/_PROJECT_PARKING_LOT.md`; abandoned or deprecated projects go to `reasoning-overview/_PROJECT_ARCHIVE.md` or `reasoning-project/_archive/`. They are preserved but do not enter the default active dashboard flow.
+- Portfolio-level challenges go to `reasoning-overview/_CHALLENGE_REGISTER.md`: record type, evidence, blast radius, owner/TBD, next action, safety boundary, sync level, and last review before fixing.
 - After anyone creates or advances a project, synchronize `reasoning-overview/PROJECT_DASHBOARD.html`.
 - Creating a formal project also initializes its project map HTML, published copy, dashboard card, and project-page link.
 
@@ -53,7 +54,11 @@ To view the dashboard anywhere, deploy only the public-safe static files, never 
 
 Collect feedback via the dashboard: related project, suggestion, reason, evidence/link, and whether the dashboard needs updating. Adopted feedback syncs the dashboard and the relevant project folder. Raw feedback files are never web-accessible.
 
-## 10. AI collaboration
+## 10. Challenge triage
+
+Use challenge triage for stale public copies, registry/dashboard mismatch, data-provenance gaps, local-rule drift, dirty worktrees, orphaned handoffs, or archive residue. Record first in `_CHALLENGE_REGISTER.md`; create a project-level note or repair attempt only when the next action is concrete. Do not make broad cross-project cleanup edits without explicit confirmation.
+
+## 11. AI collaboration
 
 - Read the smallest necessary context first; when editing a project, work from that project root.
 - Before creating or modifying a project, confirm the operator's Git identity (`git config user.name`, `git config user.email`); if missing, ask the user to configure their own and pause.
@@ -66,6 +71,6 @@ Collect feedback via the dashboard: related project, suggestion, reason, evidenc
 
 See `GIT_WORKFLOW.md` for git identity and commit policy.
 
-## 11. Minimum handoff
+## 12. Minimum handoff
 
 After each meaningful step, leave: current status, next step, blocker/risk, owner (or TBD), evidence path, and last-sync date.

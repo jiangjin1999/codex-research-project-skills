@@ -143,11 +143,47 @@ Expected behavior:
 
 Status: pass by skill rule inspection.
 
+## Test 9: Record portfolio drift before repair
+
+Prompt:
+
+```text
+Use $manage-research-portfolio. The project registry, public project page, and dashboard may be out of sync. Find the challenge and update the workflow without fixing every page yet.
+```
+
+Expected behavior:
+
+- Treat this as challenge triage, not broad cleanup.
+- Create or update `_CHALLENGE_REGISTER.md` or `<slug>-ai/<date>_challenge-review.md`.
+- Record challenge type, evidence, blast radius, owner/TBD, next action, safety boundary, sync level, and last reviewed.
+- Do not expose private paths, raw logs, data names, or source-domain details.
+- Only sync the dashboard if a public state, owner, status, next action, or public copy actually changes.
+
+Status: pass by skill rule inspection.
+
+## Test 10: Convert a project challenge into a repair attempt only when concrete
+
+Prompt:
+
+```text
+Use $iterate-research-project. This project's data notes, board, and local rules seem inconsistent; decide how to record the issue.
+```
+
+Expected behavior:
+
+- Create or update `1-Docs/<date>_challenge-review.md`, `_ai/findings.md`, and `_ai/task_plan.md`.
+- Record the challenge type, evidence path, blast radius, owner/TBD, next action, safety boundary, and Sync Scale level.
+- Do not create `0-Project/<date>_repair-.../` unless there is a concrete audit or fix to run.
+- Do not sync `PROJECT_BOARD.html` unless next/status/blocker/data boundary/attempt state changes.
+
+Status: pass by skill rule inspection.
+
 ## Structural parity check
 
 `examples/llm-reasoning-portfolio/` is built to the exact structure both skills describe. To re-verify after edits:
 
 - Portfolio areas exist and are prefixed: `reasoning-overview`, `reasoning-project`, `reasoning-data`, `reasoning-ai`.
+- `reasoning-overview/_CHALLENGE_REGISTER.md` exists for portfolio-level drift and operational debt.
 - `reasoning-overview/PROJECT_DASHBOARD.html` has a persistent overview and exactly three mutually-exclusive views; `public-dashboard/` mirrors it with per-project pages.
 - Every project (and `_PROJECT_TEMPLATE`) has `0-Project/1-Docs/2-Data/3-Paper_Survey/4-Skills/_ai` plus root `README.md/PROJECT_GUIDELINES.md/PROJECT_BOARD.html/GIT_WORKFLOW.md/.gitignore/scripts/init_project_git.sh`.
 - Every `PROJECT_BOARD.html` has a persistent Back-to-dashboard link, a version status, a persistent overview, and five views.

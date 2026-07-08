@@ -53,6 +53,36 @@ Parked future plans need only: idea, why it matters, trigger to revisit, possibl
 
 Archived/deprecated projects need: stop reason, date, superseded-by/replacement if any, last evidence, what not to repeat, and reactivation condition. Record them in `<slug>-overview/_PROJECT_ARCHIVE.md`; if files must move, use `<slug>-project/_archive/<project-name>/`. Keep the folder and evidence; hide it from the default mainline flow unless explicitly reviewing history.
 
+## Challenge Register
+
+Use `<slug>-overview/_CHALLENGE_REGISTER.md` for portfolio-level operational challenges that should be visible but should not become active projects automatically.
+
+Common challenge types:
+
+- **sync drift:** registry, board, project page, or public copy disagree;
+- **stale public copy:** published files still show removed, renamed, or outdated work;
+- **dirty worktree:** many unrelated changes make ownership and commit boundaries unclear;
+- **data-provenance gap:** data status, permissions, versions, or QC notes changed without matching project decisions;
+- **local-rule drift:** project-local guidelines, prompts, or skills diverge from the shared template without a recorded reason;
+- **handoff backlog:** many handoff or audit notes exist but are not promoted into tasks, docs, registry fields, or archive decisions;
+- **archive residue:** deprecated work still appears in default dashboards, docs maps, or public pages.
+
+Use this compact schema:
+
+| Field | Meaning |
+| --- | --- |
+| Challenge | short public-safe name |
+| Type | one of the challenge types above, or `other` |
+| Evidence | public-safe relative path, aggregate count, or high-level observation |
+| Blast radius | portfolio, one project, one board, data area, public copy, or local rules |
+| Owner | accountable person or `TBD` |
+| Next action | one concrete review/fix/ask |
+| Safety boundary | what must not be exposed or changed without confirmation |
+| Sync level | 1, 2, or 3 |
+| Last reviewed | date |
+
+Do not store private project names, raw data names, local absolute paths, person names, or sensitive details in public examples. A challenge record is not a repair plan; create a project-level note or concrete `0-Project/<date>_repair-.../` attempt only when there is an executable fix.
+
 ## Three-File Working Memory
 
 For complex portfolio or project work, keep these in the relevant directory:

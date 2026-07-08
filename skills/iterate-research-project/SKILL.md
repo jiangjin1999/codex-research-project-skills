@@ -1,6 +1,6 @@
 ---
 name: iterate-research-project
-description: Iterate one research project with evidence and keep its PROJECT_BOARD.html board in sync. Works standalone for a single project, or inside a portfolio managed by manage-research-portfolio. Use when Codex needs to classify and place project material into attempts, docs, data notes, literature, project-local skills, or AI working memory; set up or maintain the folders 0-Project, 1-Docs, 2-Data, 3-Paper_Survey, 4-Skills, and _ai; write the entry files README.md, PROJECT_GUIDELINES.md, GIT_WORKFLOW.md and the PROJECT_BOARD.html board; keep the _ai working memory (project_overview, project_board_spec, task_plan, findings, progress); route discussions to docs and concrete experiments to subprojects; write compact handoff notes before context compression or task switching; track repeated attempts, failed paths, provenance, QC, paper evidence, decisions, status, next actions; and follow the markdown-first then board Sync Scale inside a single project.
+description: Iterate one research project with evidence and keep its PROJECT_BOARD.html board in sync. Works standalone or inside a manage-research-portfolio workspace. Use when Codex needs to classify and place material into attempts, docs, data notes, literature, project-local skills, or _ai working memory; maintain 0-Project, 1-Docs, 2-Data, 3-Paper_Survey, 4-Skills, and _ai; route discussions to docs and concrete experiments to subprojects; write context handoffs; triage project challenges such as board drift, data-provenance gaps, local-rule drift, and messy worktrees; track evidence, status, blockers, next actions, and the Markdown-first Sync Scale.
 ---
 
 # Iterate Research Project
@@ -68,12 +68,15 @@ When the user gives new material, choose one landing place, then decide whether 
 | "This is a note about one existing attempt" | `0-Project/<attempt>/docs/<date>_<topic>.md` | usually Tasks, sometimes Docs Map if it changes the project-level index |
 | "This is a future attempt idea" | `_ai/task_plan.md`, `1-Docs/`, or `0-Project/_parking-lot.md`; full attempt folder only if concrete | usually none, or a parked Tasks lane |
 | "This attempt is abandoned / superseded" | keep the attempt folder or move it under `0-Project/_archive/`; mark archived with stop reason, evidence, and replacement | archived/collapsed Tasks lane |
+| "This is a challenge / drift / messy state" | `1-Docs/<date>_challenge-review.md`, `_ai/findings.md`, and `_ai/task_plan.md`; create `0-Project/<date>_repair-<slug>/` only for a concrete fix | Progress; board only if status/next/blocker/attempt state changes |
 | "This is data / benchmark information" | `2-Data/DATA.md` | Materials (数据材料) |
 | "This is a paper / external source / evidence" | `3-Paper_Survey/README.md` + evidence matrix | References (参考文献) |
 | "This is a reusable workflow / prompt / AI rule" | `4-Skills/PROJECT_SKILLS.md` | (usually none) |
 | "This changes status / next action / blocker" | `_ai/project_overview.md`, `_ai/task_plan.md` | Top overview + Progress (项目进度) |
 
 If classification changes project scope, evaluation criteria, data boundary, public exposure, or whether an attempt belongs in the project, ask before treating it as confirmed. For low-risk naming/formatting, choose the conservative option and record the assumption in `_ai/progress.md`.
+
+For challenge triage, record first and repair second. A challenge note should include type, evidence path, blast radius, owner/TBD, next action, safety boundary, and Sync Scale level. Common types: board drift, stale public copy, dirty worktree, data-provenance gap, local-rule drift, handoff backlog, and archive residue.
 
 ## The Board (看板)
 

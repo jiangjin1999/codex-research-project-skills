@@ -1,6 +1,6 @@
 ---
 name: manage-research-portfolio
-description: Manage a multi-project research portfolio and keep its dashboard board in sync. Use when Codex needs to create, review, update, synchronize, or QA a portfolio workspace built from four slug-prefixed top-level areas (overview, project, data, ai); a project registry with owner/priority/status/next-action/evidence; a copyable project template; shared data-governance notes; cross-project AI handoffs; a PROJECT_DASHBOARD.html board whose persistent overview and Project/Data/Usage views map one-to-one to the top-level folders; and a public-safe published copy of that dashboard. Keeps a lightweight Markdown-first workflow and private-data safety boundaries.
+description: Manage a multi-project research portfolio and keep its dashboard board in sync. Use when Codex needs to create, review, update, synchronize, or QA a portfolio workspace built from four slug-prefixed top-level areas (overview, project, data, ai); a project registry with owner/priority/status/next-action/evidence; challenge triage for sync drift, stale public copies, dirty worktrees, data-provenance gaps, local-rule drift, or orphaned handoffs; a copyable project template; shared data-governance notes; cross-project AI handoffs; a PROJECT_DASHBOARD.html board whose persistent overview and Project/Data/Usage views map one-to-one to the top-level folders; and a public-safe published copy of that dashboard. Keeps a lightweight Markdown-first workflow and private-data safety boundaries.
 ---
 
 # Manage Research Portfolio
@@ -31,6 +31,7 @@ Do not turn every idea into a live project. Park early ideas cheaply; promote on
    - A concrete research project: `<slug>-project/<project-name>/`
    - Future or possible project idea: `<slug>-overview/_PROJECT_PARKING_LOT.md` or a clearly marked parked section in the registry
    - Abandoned/deprecated project: `<slug>-overview/_PROJECT_ARCHIVE.md` or `<slug>-project/_archive/`, with stop reason and evidence
+   - Portfolio challenge or drift: `<slug>-overview/_CHALLENGE_REGISTER.md` or `<slug>-ai/<date>_challenge-review.md`
    - After a project exists, run project-specific edits from that project root as the working directory, not from the portfolio root. Use the portfolio root / `<slug>-overview` only for overview, deployment, global rules, global skills, or cross-project synchronization.
 2. Read the smallest useful context first: `<slug>-overview/README.md` for intent, the project registry, and any recent `<slug>-ai/<date>_<topic>.md` handoff related to the request.
 3. For a concrete project, switch to that project and use the `iterate-research-project` skill (root `PROJECT_GUIDELINES.md`, `_ai/project_overview.md`, `_ai/project_board_spec.md`, then the numbered folders).
@@ -75,6 +76,7 @@ Modular collaboration language — encourage the user to name the module type in
 - "This project is deprecated / abandoned" → archived lane with stop reason, replacement if any, evidence, and reactivation condition.
 - "This is data information" → source/version/permissions/QC/boundary; project `2-Data/DATA.md`.
 - "This is context to survive compression or task switching" → write the narrowest handoff: project `_ai`/`1-Docs`/attempt `docs/`, or `<slug>-ai/<date>_<topic>.md` for portfolio-wide context.
+- "This is a challenge / drift / messy state" → record a challenge first; do not fix everything in one broad edit.
 - If unsure, classify first, explain the landing place, then edit.
 
 See `references/portfolio-system.md` for the full folder-and-record contract, registry fields, working memory, and new-project initialization.
@@ -113,6 +115,16 @@ Keep parked and archived work separate:
 | Parked future plan | Idea, why it matters, trigger to revisit, possible owner, evidence/source | Promote to mainline only when it has a concrete next action or coordination need |
 | Archived/deprecated project | Stop reason, replacement/superseded-by, last evidence, what not to repeat, reactivation condition | Keep out of default dashboard unless reviewing history or reactivating |
 
+## Challenge Triage
+
+Treat portfolio challenges as records before repairs. Use this for sync drift, stale public copies, oversized dirty worktrees, data-provenance gaps, local-rule drift, orphaned handoffs, or deleted/archived artifacts that still appear active.
+
+Default record: `<slug>-overview/_CHALLENGE_REGISTER.md`. Use `<slug>-ai/<date>_challenge-review.md` when the review is narrative or spans several projects.
+
+Minimum fields: Challenge, Type, Evidence, Blast radius, Owner/TBD, Next action, Safety boundary, Sync level, Last reviewed. Keep evidence as public-safe relative paths or high-level descriptions. Do not paste private data, raw logs, local absolute paths, or source-domain details into the record.
+
+After recording, choose one next action only: update a registry/dashboard field, open a project-level challenge note, create a concrete repair attempt, archive stale work, or ask the user to resolve ownership/safety. Broad automatic cleanup across many projects is a separate confirmed task.
+
 ## New Project Creation
 
 1. Confirm the operator's Git identity (`git config user.name`, `git config user.email`). If missing, ask the user to configure their own and pause until done. Identity is attribution + commit authorship, never a credential.
@@ -126,7 +138,7 @@ Keep parked and archived work separate:
 | Level | Trigger | Update |
 | --- | --- | --- |
 | 0 | Read-only exploration, no new decision | Nothing |
-| 1 | Local project work changed | Project source files and `_ai` notes only |
+| 1 | Local project work changed, or a challenge is recorded without changing active state | Project source files, `_ai` notes, or `_CHALLENGE_REGISTER.md` only |
 | 2 | Project status, blocker, evidence, next action, owner, or priority changed | Project summary + portfolio registry + the dashboard Project Board card |
 | 3 | Public claim, shared data rule, ownership, deployment/version, or a cross-project rule changed | Registry, dashboard, published public copy, and a cross-project handoff |
 
@@ -136,6 +148,7 @@ Keep parked and archived work separate:
 - Ask when missing information affects owner, public boundary, project status, next action, data safety, or whether to sync the dashboard.
 - Ask before turning any decision into a portfolio-wide or cross-project rule; confirm scope, exceptions, and which rule files to update.
 - For low-risk formatting/naming/classification, choose the conservative option and record the assumption in `progress.md`.
+- If a challenge has multiple causes, split it into separate records instead of creating one vague mega-task.
 - Before context gets long, after a meaningful step, or before switching projects, write a compact handoff in the narrowest matching Markdown file. Include current goal, completed step, key decisions, evidence paths, open questions, next action, and whether dashboard/board sync is needed.
 - Keep questions short and concrete, preferably 2-3 options.
 

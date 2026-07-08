@@ -74,6 +74,7 @@ Classify the work before writing:
 | Discussion, method explanation, comparison, meeting note, or decision | `1-Docs/<date>_<topic>.md` | Use when the record is durable thinking, not an executable attempt |
 | Concrete small attempt with inputs, criteria, outputs, or result | `0-Project/<date>_<attempt-name>/` | Use when the record needs its own run context or future continuation point |
 | Note about one existing attempt | `0-Project/<attempt>/docs/<date>_<topic>.md` | Use when the discussion only makes sense inside that attempt |
+| Challenge, drift, messy state, or audit finding | `1-Docs/<date>_challenge-review.md` + `_ai/findings.md` / `_ai/task_plan.md` | Record before repair; create a repair attempt only when there is an executable fix |
 | Status, next action, blocker, validation, or recovery note | `_ai/{task_plan,findings,progress}.md` | Use for working memory and task continuity |
 
 If in doubt, ask whether the content is "thinking about the project" or "trying something in the project." Thinking goes to `1-Docs/`; trying goes to `0-Project/`.
@@ -102,6 +103,25 @@ Use lanes to keep the active path clear while still preserving non-linear thinki
 Parked ideas do not require a full attempt folder. Use `_ai/task_plan.md`, `1-Docs/<date>_future-ideas.md`, or `0-Project/_parking-lot.md` when the idea is still speculative. Create `0-Project/<date>_<name>/` only when the idea has enough shape to need a handoff, criteria, inputs, or later execution.
 
 Archived attempts should not be deleted. Keep their evidence and stop reason so the project does not repeat the same path. Move them to `0-Project/_archive/<attempt-name>/` or keep them in place with `Status: archived`, depending on the project's existing convention.
+
+## Challenge Triage
+
+Use challenge triage when the project has drift or operational debt rather than a single experiment to run. Typical project-level challenges: board/source mismatch, stale public page, oversized dirty worktree, data-provenance gap, local guideline or skill drift, handoff backlog, or archived work still showing as active.
+
+Record a compact challenge review before fixing:
+
+| Field | Meaning |
+| --- | --- |
+| Challenge | short public-safe name |
+| Type | board drift, data-provenance gap, local-rule drift, dirty worktree, handoff backlog, archive residue, or other |
+| Evidence | relative path or high-level observation |
+| Blast radius | project overview, attempt, data note, board, public copy, or local rules |
+| Owner | accountable person or `TBD` |
+| Next action | one concrete review/fix/ask |
+| Safety boundary | what must not be exposed or changed without confirmation |
+| Sync level | 1, 2, or 3 |
+
+If the next action is a concrete repair or audit run, create `0-Project/<date>_repair-<slug>/`. Otherwise keep it in `1-Docs/` and `_ai/` until the user chooses a fix.
 
 Use a dated slug:
 

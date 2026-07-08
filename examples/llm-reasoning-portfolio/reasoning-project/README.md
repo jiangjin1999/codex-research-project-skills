@@ -29,6 +29,10 @@ These are preserved for audit and to avoid repeating known bad paths. They are n
 | --- | --- | --- | --- | --- |
 | `prompt-zoo-scrape` | Too broad; collected prompts without a decision criterion | `reasoning-baselines` | draft note, not carried into public board | reactivate only if a benchmark-specific prompt source is needed |
 
+## Portfolio Challenges
+
+Portfolio-level drift and operational debt live in `reasoning-overview/_CHALLENGE_REGISTER.md`. Record the challenge before repair; project-level repairs should become a docs note or a concrete `0-Project/<date>_repair-.../` attempt only after the next action is clear.
+
 Rules:
 
 - Status requires an evidence path before `done`, `paused`, or `blocked`.
